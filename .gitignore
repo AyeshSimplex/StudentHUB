@@ -1,0 +1,26 @@
+# Operating System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Log files
+logs/*.log
+*.log
+
+# Sensitive credentials & environment
+# config.local.php
+# .env
+
+# User Uploaded Media (keep directory structure with .gitkeep)
+uploads/avatars/*
+!uploads/avatars/.gitkeep
+uploads/projects/*
+!uploads/projects/.gitkeep
