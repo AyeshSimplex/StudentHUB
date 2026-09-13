@@ -1,8 +1,9 @@
 <?php
 /**
  * Delete Message — StudentHub
- * Deletes a contact form inquiry from the database.
- * Protected page — requires authentication and admin authorization (Ayesh Rathnayaka / demo).
+ * Deletes a contact form message from the database.
+ * Protected page — requires authentication.
+ * Allows: message owner (user_id match) or admin.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -11,17 +12,9 @@ require_once 'includes/functions.php';
 requireLogin();
 
 $userId = $_SESSION['user_id'];
-$username = $_SESSION['username'] ?? '';
-$email = $_SESSION['email'] ?? '';
 
-// Authorization check: Ayesh Rathnayaka / Demo Administrator account
-$isAuthorized = ($userId == 1 || $username === 'ayesh' || in_array($email, ['demo@studenthub.lk', 'ent2023048@tec.rjt.ac.lk']));
-
-if (!$isAuthorized) {
-    $_SESSION['error'] = 'You are not authorized to delete contact messages.';
-    header('Location: dashboard.php');
-    exit();
-}
+// Ensure user_id column exists
+ensureMessagesUserIdColumn($conn);
 
 $messageId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -31,8 +24,8 @@ if ($messageId <= 0) {
     exit();
 }
 
-// Verify message exists
-$stmt = $conn->prepare("SELECT id, name, subject FROM messages WHERE id = ?");
+// Verify message exists and check ownership
+$stmt = $conn->prepare("SELECT id, name, subject, user_id FROM messages WHERE id = ?");
 $stmt->bind_param("i", $messageId);
 $stmt->execute();
 $message = $stmt->get_result()->fetch_assoc();
@@ -44,7 +37,17 @@ if (!$message) {
     exit();
 }
 
-// Delete message from database
+// Authorization: message owner OR admin
+$isMessageOwner = (isset($message['user_id']) && $message['user_id'] == $userId);
+$isAuthorized = $isMessageOwner || isAdmin();
+
+if (!$isAuthorized) {
+    $_SESSION['error'] = 'You are not authorized to delete this message.';
+    header('Location: dashboard.php');
+    exit();
+}
+
+// Delete message from database (replies cascade automatically)
 $stmt = $conn->prepare("DELETE FROM messages WHERE id = ?");
 $stmt->bind_param("i", $messageId);
 
