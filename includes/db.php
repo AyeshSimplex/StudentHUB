@@ -12,6 +12,9 @@
  * -----------------------------------------------
  */
 
+// Set default timezone for PHP to match local time (Sri Lanka)
+date_default_timezone_set('Asia/Colombo');
+
 // Database configuration
 define('DB_HOST', 'localhost');    // Database host (usually 'localhost' for WAMP)
 define('DB_USER', 'root');         // Database username (default WAMP user is 'root')
