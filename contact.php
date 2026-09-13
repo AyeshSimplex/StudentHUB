@@ -1,12 +1,14 @@
 <?php
 /**
  * Contact Page — StudentHub
- * Contact form that saves messages to the database.
+ * Contact form that saves messages to the database as public messages.
  */
 $pageTitle = 'Contact';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
-require_once 'includes/mailer.php';
+
+// Ensure messages table has user_id column
+ensureMessagesUserIdColumn($conn);
 
 $errors = [];
 $old = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
@@ -35,16 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Message must be at least 10 characters.';
     }
 
-    // If no errors, insert into database and dispatch email
+    // If no errors, insert into database
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $name, $email, $subject, $message);
+        $msgUserId = $_SESSION['user_id'] ?? null;
+        $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message, user_id) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssi", $name, $email, $subject, $message, $msgUserId);
 
         if ($stmt->execute()) {
-            // Forward notification email directly to ent2023048@tec.rjt.ac.lk
-            sendContactEmail($name, $email, $subject, $message, 'ent2023048@tec.rjt.ac.lk');
-
-            $_SESSION['success'] = 'Thank you! Your message has been sent successfully to ent2023048@tec.rjt.ac.lk. We will get back to you soon.';
+            $_SESSION['success'] = 'Thank you! Your message has been submitted successfully.';
             $stmt->close();
             header('Location: contact.php');
             exit();
@@ -93,16 +93,6 @@ require_once 'includes/header.php';
                     </div>
 
                     <div class="contact-info-item">
-                        <i class="bi bi-envelope"></i>
-                        <div>
-                            <div class="info-label">Email</div>
-                            <div class="info-value">
-                                <a href="mailto:ent2023048@tec.rjt.ac.lk" class="text-reset">ent2023048@tec.rjt.ac.lk</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
                         <i class="bi bi-clock"></i>
                         <div>
                             <div class="info-label">Hours</div>
@@ -116,6 +106,14 @@ require_once 'includes/header.php';
             <div class="col-lg-7 fade-in delay-1">
                 <div class="contact-form-card">
                     <h3><i class="bi bi-send me-2 accent-text"></i>Send a Message</h3>
+
+                    <!-- Public Message Notice -->
+                    <div class="public-message-notice">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <div>
+                            <strong>Public Message Notice:</strong> Messages submitted here are publicly visible to other StudentHub users and may receive replies. Please do not include private or sensitive information such as passwords, phone numbers, or personal addresses.
+                        </div>
+                    </div>
 
                     <!-- Errors -->
                     <?php if (!empty($errors)): ?>
