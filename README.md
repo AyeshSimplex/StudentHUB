@@ -51,8 +51,12 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **Hero Carousel:** Responsive interactive carousel featuring university project highlights with touch/arrow controls and glassmorphic styling.
 - **Live Search & Category Filters:** Real-time client-side project search by title, technologies, or student name, combined with category filters and sorting options without page reloads.
 - **Public Profiles:** Public student portfolios highlighting biographical data, faculty, skills badges, and all published projects.
-- **Contact Form & Notifications:** Public inquiries stored in database, forwarded via mailer, and logged for administrative inspection.
-- **Admin Inquiries Management:** Message viewing and deletion directly on the student dashboard.
+- **Reviews & Star Ratings (NEW):** Interactive 5-star rating and review system on project pages with automatic average calculation and user-managed reviews.
+- **Project Sharing (NEW):** Native Web Share API integration for seamless mobile/desktop sharing, with a clipboard fallback.
+- **Clickable Project Cards:** Enhanced UX allowing users to click anywhere on a project gig card to view details, while keeping sub-actions (like 'Edit') functional.
+- **Contact Form & Public Notice:** Inquiries submitted via the contact form are stored in the database. Features a public visibility warning and no longer dispatches internal emails for privacy.
+- **Dashboard Message Management (NEW):** Students and Admins can view, edit, reply, or delete their own messages and replies directly from the dashboard. Admin replies appear as 'StudentHub Team'.
+- **User Dashboard Metrics (NEW):** The inquiries counter accurately reflects only the current user's submitted messages for better privacy.
 
 ---
 
@@ -220,7 +224,11 @@ StudentHUB/
 ├── upload-project-images.php    # Post-publish screenshot gallery uploader
 ├── set-cover-image.php          # Reassign primary cover image
 ├── delete-project-image.php     # Delete individual screenshot
+├── submit-review.php            # Handle 5-star ratings and reviews submission
+├── delete-review.php            # Allow users to delete their own reviews
+├── edit-message.php             # Edit user-submitted contact inquiries
 ├── delete-message.php           # Admin delete message handler
+├── reply-message.php            # Community and Admin reply handler for messages
 │
 ├── includes/
 │   ├── db.php                   # MySQLi database connection setup
