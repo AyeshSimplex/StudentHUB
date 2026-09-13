@@ -4,6 +4,11 @@
 
 StudentHub is a comprehensive, full-stack web application designed for university students to publish portfolios, showcase academic and engineering projects, collaborate with peers, and share technical skills.
 
+> 🌐 **Live Application Demo:** [https://ayesh-studenthub.page.gd](https://ayesh-studenthub.page.gd)  
+> **Status:** Active & Deployed Online
+
+---
+
 > **Institution:** Rajarata University of Sri Lanka  
 > **Faculty:** Faculty of Technology — Department of Materials Technology  
 > **Course Module:** ICT 2209 Web Technologies Mini Project  
