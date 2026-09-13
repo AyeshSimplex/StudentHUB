@@ -1,10 +1,13 @@
 <?php
 /**
  * Project Details Page — StudentHub
- * Displays full details for a single project, multi-image gallery, and author editing/management options.
+ * Displays full details for a single project, multi-image gallery, reviews, ratings, and sharing.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
+
+// Ensure reviews table exists
+ensureReviewsTable($conn);
 
 // Get project ID from URL
 $projectId = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -56,6 +59,32 @@ foreach ($galleryImages as $gImg) {
             'caption' => $gImg['caption'] ?: 'Project Screenshot',
             'is_cover' => false
         ];
+    }
+}
+
+// Fetch reviews for this project
+$reviewsStmt = $conn->prepare("SELECT r.*, u.full_name, u.username, u.profile_image FROM reviews r JOIN users u ON r.user_id = u.id WHERE r.project_id = ? ORDER BY r.created_at DESC");
+$reviewsStmt->bind_param("i", $projectId);
+$reviewsStmt->execute();
+$reviewsResult = $reviewsStmt->get_result();
+$reviews = [];
+$totalRating = 0;
+while ($rev = $reviewsResult->fetch_assoc()) {
+    $reviews[] = $rev;
+    $totalRating += $rev['rating'];
+}
+$reviewsStmt->close();
+$reviewCount = count($reviews);
+$avgRating = $reviewCount > 0 ? round($totalRating / $reviewCount, 1) : 0;
+
+// Check if current user already reviewed
+$userReview = null;
+if ($currentUserId) {
+    foreach ($reviews as $rev) {
+        if ($rev['user_id'] == $currentUserId) {
+            $userReview = $rev;
+            break;
+        }
     }
 }
 
@@ -269,6 +298,25 @@ require_once 'includes/header.php';
                         <?php endif; ?>
                     </div>
 
+                    <!-- Average Rating Display -->
+                    <?php if ($reviewCount > 0): ?>
+                        <div class="detail-meta-item">
+                            <i class="bi bi-star-fill" style="color: #f7c948;"></i>
+                            <div>
+                                <div class="detail-meta-label">Rating</div>
+                                <div class="detail-meta-value">
+                                    <span class="stars-display">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="bi <?php echo $i <= round($avgRating) ? 'bi-star-fill' : 'bi-star'; ?>" style="color: #f7c948;"></i>
+                                        <?php endfor; ?>
+                                    </span>
+                                    <span class="ms-2"><?php echo $avgRating; ?> / 5</span>
+                                    <span class="text-muted ms-1">(<?php echo $reviewCount; ?> review<?php echo $reviewCount !== 1 ? 's' : ''; ?>)</span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <!-- Links -->
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <?php if ($project['project_url']): ?>
@@ -281,6 +329,10 @@ require_once 'includes/header.php';
                                 <i class="bi bi-github me-2"></i>View on GitHub
                             </a>
                         <?php endif; ?>
+                        <!-- Share Button -->
+                        <button type="button" class="btn btn-outline-accent" onclick="shareProject()" id="shareBtn">
+                            <i class="bi bi-share me-2"></i>Share
+                        </button>
                     </div>
 
                     <?php if ($isAuthor): ?>
@@ -312,6 +364,117 @@ require_once 'includes/header.php';
                         <p class="project-detail-desc mb-0">
                             <?php echo nl2br(sanitize($project['description'])); ?>
                         </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews & Ratings Section -->
+        <div class="row mt-5">
+            <div class="col-12 fade-in">
+                <div class="card border-0 shadow-sm" style="border-radius: var(--radius);">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="mb-0"><i class="bi bi-star me-2 accent-text"></i>Reviews & Ratings</h4>
+                            <?php if ($reviewCount > 0): ?>
+                                <div class="text-muted">
+                                    <span class="stars-display">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="bi <?php echo $i <= round($avgRating) ? 'bi-star-fill' : 'bi-star'; ?>" style="color: #f7c948;"></i>
+                                        <?php endfor; ?>
+                                    </span>
+                                    <strong class="ms-1"><?php echo $avgRating; ?></strong> (<?php echo $reviewCount; ?>)
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Review Form -->
+                        <?php if (isLoggedIn()): ?>
+                            <div class="review-form-card mb-4">
+                                <h6 class="mb-3"><i class="bi bi-pencil-square me-1"></i><?php echo $userReview ? 'Update Your Review' : 'Write a Review'; ?></h6>
+                                <form method="POST" action="submit-review.php">
+                                    <input type="hidden" name="project_id" value="<?php echo $projectId; ?>">
+                                    
+                                    <!-- Star Rating Selection -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Rating <span class="text-danger">*</span></label>
+                                        <div class="star-rating-input" id="starRatingInput">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <input type="radio" name="rating" value="<?php echo $i; ?>" id="star<?php echo $i; ?>" 
+                                                       <?php echo ($userReview && $userReview['rating'] == $i) ? 'checked' : ''; ?> required>
+                                                <label for="star<?php echo $i; ?>" title="<?php echo $i; ?> star<?php echo $i > 1 ? 's' : ''; ?>">
+                                                    <i class="bi bi-star-fill"></i>
+                                                </label>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="review_text" class="form-label">Your Review (Optional)</label>
+                                        <textarea class="form-control" id="review_text" name="review_text" rows="3" 
+                                                  placeholder="Share your thoughts about this project..."><?php echo $userReview ? sanitize($userReview['review_text']) : ''; ?></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-accent">
+                                        <i class="bi bi-send me-1"></i><?php echo $userReview ? 'Update Review' : 'Submit Review'; ?>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-center py-3 mb-4" style="background: rgba(0,188,212,0.05); border-radius: var(--radius);">
+                                <p class="mb-2 text-muted"><i class="bi bi-person-lock me-1"></i>Please log in to leave a review.</p>
+                                <a href="login.php" class="btn btn-sm btn-accent">Log In</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Existing Reviews -->
+                        <?php if (!empty($reviews)): ?>
+                            <div class="reviews-list">
+                                <?php foreach ($reviews as $rev): ?>
+                                    <div class="review-item">
+                                        <div class="review-header">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="review-avatar">
+                                                    <?php if (!empty($rev['profile_image']) && file_exists('uploads/avatars/' . $rev['profile_image'])): ?>
+                                                        <img src="uploads/avatars/<?php echo sanitize($rev['profile_image']); ?>" alt="">
+                                                    <?php else: ?>
+                                                        <?php echo strtoupper(substr($rev['full_name'], 0, 1)); ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div>
+                                                    <strong><?php echo sanitize($rev['full_name']); ?></strong>
+                                                    <div class="stars-display small">
+                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                            <i class="bi <?php echo $i <= $rev['rating'] ? 'bi-star-fill' : 'bi-star'; ?>" style="color: #f7c948;"></i>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="text-muted small"><?php echo getTimeAgo($rev['created_at']); ?></span>
+                                                <?php if ($currentUserId && ($rev['user_id'] == $currentUserId || isAdmin())): ?>
+                                                    <a href="delete-review.php?id=<?php echo $rev['id']; ?>&project_id=<?php echo $projectId; ?>" 
+                                                       class="btn btn-sm btn-outline-danger" style="padding: 2px 6px; font-size: 0.7rem;"
+                                                       onclick="return confirm('Delete this review?');">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <?php if (!empty($rev['review_text'])): ?>
+                                            <div class="review-body">
+                                                <?php echo sanitize($rev['review_text']); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-center py-3 text-muted">
+                                <i class="bi bi-chat-square-text d-block" style="font-size: 2rem; opacity: 0.4;"></i>
+                                <p class="mt-2 mb-0">No reviews yet. Be the first to review this project!</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -421,6 +584,78 @@ function openLightbox(src, caption) {
     const modal = new bootstrap.Modal(document.getElementById('lightboxModal'));
     modal.show();
 }
+
+// Share Project
+function shareProject() {
+    const title = <?php echo json_encode($project['title']); ?>;
+    const url = window.location.href;
+    const text = 'Check out this project on StudentHub: ' + title;
+
+    if (navigator.share) {
+        navigator.share({ title: title, text: text, url: url }).catch(() => {});
+    } else {
+        // Clipboard fallback
+        navigator.clipboard.writeText(url).then(function() {
+            var btn = document.getElementById('shareBtn');
+            var original = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Link Copied!';
+            btn.classList.add('btn-success');
+            btn.classList.remove('btn-outline-accent');
+            setTimeout(function() {
+                btn.innerHTML = original;
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-accent');
+            }, 2000);
+        }).catch(function() {
+            prompt('Copy the link below:', url);
+        });
+    }
+}
+
+// Star Rating Interaction
+document.addEventListener('DOMContentLoaded', function() {
+    var starContainer = document.getElementById('starRatingInput');
+    if (starContainer) {
+        var labels = starContainer.querySelectorAll('label');
+        var radios = starContainer.querySelectorAll('input[type="radio"]');
+        
+        function highlightStars(count) {
+            labels.forEach(function(label, idx) {
+                if (idx < count) {
+                    label.querySelector('i').className = 'bi bi-star-fill';
+                    label.style.color = '#f7c948';
+                } else {
+                    label.querySelector('i').className = 'bi bi-star-fill';
+                    label.style.color = '#d1d5db';
+                }
+            });
+        }
+
+        function getCheckedValue() {
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) return parseInt(radios[i].value);
+            }
+            return 0;
+        }
+
+        // Set initial state from pre-checked radio
+        highlightStars(getCheckedValue());
+
+        labels.forEach(function(label, index) {
+            label.addEventListener('mouseenter', function() {
+                highlightStars(index + 1);
+            });
+            label.addEventListener('click', function() {
+                highlightStars(index + 1);
+            });
+        });
+
+        starContainer.addEventListener('mouseleave', function() {
+            highlightStars(getCheckedValue());
+        });
+    }
+});
 </script>
 
 <?php require_once 'includes/footer.php'; ?>
+
