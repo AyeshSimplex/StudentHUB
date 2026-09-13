@@ -111,6 +111,11 @@ function getTimeAgo($datetime) {
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
 
+    // If the date is in the future (invert is 0), just say "Just now" to handle clock skews
+    if ($diff->invert === 0) {
+        return 'Just now';
+    }
+
     if ($diff->y > 0) return $diff->y . ' year' . ($diff->y > 1 ? 's' : '') . ' ago';
     if ($diff->m > 0) return $diff->m . ' month' . ($diff->m > 1 ? 's' : '') . ' ago';
     if ($diff->d > 0) return $diff->d . ' day' . ($diff->d > 1 ? 's' : '') . ' ago';
@@ -449,5 +454,71 @@ function setProjectCoverImage($conn, $projectId, $imageName, $userId) {
     $res = $stmt->execute();
     $stmt->close();
     return $res;
+}
+
+/**
+ * Check if the current user is an admin
+ * @return bool True if the current session user is the admin
+ */
+function isAdmin() {
+    $userId = $_SESSION['user_id'] ?? null;
+    $username = $_SESSION['username'] ?? '';
+    $email = $_SESSION['email'] ?? '';
+    return ($userId == 1 || $username === 'ayesh' || in_array($email, ['demo@studenthub.lk', 'ent2023048@tec.rjt.ac.lk']));
+}
+
+/**
+ * Ensure user_id column exists in messages table
+ * @param mysqli $conn Database connection
+ */
+function ensureMessagesUserIdColumn($conn) {
+    static $checked = false;
+    if ($checked) return;
+    $check = $conn->query("SHOW COLUMNS FROM `messages` LIKE 'user_id'");
+    if ($check && $check->num_rows === 0) {
+        $conn->query("ALTER TABLE `messages` ADD COLUMN `user_id` INT DEFAULT NULL AFTER `message`");
+        // Add foreign key only if it doesn't exist
+        $conn->query("ALTER TABLE `messages` ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL");
+    }
+    $checked = true;
+}
+
+/**
+ * Ensure message_replies table exists
+ * @param mysqli $conn Database connection
+ */
+function ensureMessageRepliesTable($conn) {
+    static $initialized = false;
+    if ($initialized) return;
+    $conn->query("CREATE TABLE IF NOT EXISTS `message_replies` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `message_id` INT NOT NULL,
+        `user_id` INT NOT NULL,
+        `reply_text` TEXT NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (`message_id`) REFERENCES `messages`(`id`) ON DELETE CASCADE,
+        FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $initialized = true;
+}
+
+/**
+ * Ensure reviews table exists
+ * @param mysqli $conn Database connection
+ */
+function ensureReviewsTable($conn) {
+    static $initialized = false;
+    if ($initialized) return;
+    $conn->query("CREATE TABLE IF NOT EXISTS `reviews` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `project_id` INT NOT NULL,
+        `user_id` INT NOT NULL,
+        `rating` TINYINT NOT NULL,
+        `review_text` TEXT DEFAULT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE CASCADE,
+        FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $initialized = true;
 }
 ?>
