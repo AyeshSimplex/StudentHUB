@@ -212,6 +212,11 @@ document.addEventListener('DOMContentLoaded', function () {
         sortFilter.addEventListener('change', filterProjects);
     }
 
+    // Auto-apply filter if a category is pre-selected (e.g. from URL parameter)
+    if (categoryFilter && categoryFilter.value !== 'all') {
+        filterProjects();
+    }
+
     // ===================================
     // 6. Form Validation
     // ===================================
