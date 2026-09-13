@@ -2159,3 +2159,424 @@ img {
     z-index: 1050 !important;
 }
 
+/* ===================================
+   Public Message Notice (Contact Page)
+   =================================== */
+.public-message-notice {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.08), rgba(0, 150, 170, 0.05));
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.public-message-notice i {
+    color: var(--accent);
+    font-size: 1.1rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* ===================================
+   Message Cards (Dashboard)
+   =================================== */
+.messages-list {
+    padding: 0;
+}
+
+.message-card {
+    border: 1px solid #e8ecf1;
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+    background: var(--card-bg);
+    transition: box-shadow 0.2s ease;
+}
+
+.message-card:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.message-sender-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #00a5bb);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.message-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.message-body {
+    padding: 10px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    border-top: 1px solid #f0f2f5;
+}
+
+.message-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    border-top: 1px solid #f0f2f5;
+}
+
+/* Edit Message Form */
+.edit-message-form {
+    margin-top: 12px;
+    padding: 14px;
+    background: rgba(0, 188, 212, 0.04);
+    border-radius: var(--radius);
+    border: 1px solid rgba(0, 188, 212, 0.15);
+}
+
+/* Reply Form */
+.reply-form-container {
+    margin-top: 12px;
+    padding: 14px;
+    background: #f8fafc;
+    border-radius: var(--radius);
+    border: 1px solid #e8ecf1;
+}
+
+/* Message Replies */
+.message-replies {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e0e0e0;
+}
+
+.replies-header {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.reply-item {
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid rgba(0, 188, 212, 0.3);
+}
+
+.reply-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.reply-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c4dff, #536dfe);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+.reply-body {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+/* Admin Team Badge */
+.bg-accent-subtle {
+    background: rgba(0, 188, 212, 0.12) !important;
+}
+
+.text-accent {
+    color: var(--accent) !important;
+}
+
+/* ===================================
+   Star Rating Input
+   =================================== */
+.star-rating-input {
+    display: flex;
+    gap: 4px;
+    direction: ltr;
+}
+
+.star-rating-input input[type="radio"] {
+    display: none;
+}
+
+.star-rating-input label {
+    cursor: pointer;
+    font-size: 1.6rem;
+    color: #d1d5db;
+    transition: color 0.15s ease, transform 0.15s ease;
+    line-height: 1;
+}
+
+.star-rating-input label:hover,
+.star-rating-input label.hovered {
+    color: #f7c948;
+    transform: scale(1.15);
+}
+
+.star-rating-input input[type="radio"]:checked ~ label {
+    color: #d1d5db;
+}
+
+.star-rating-input input[type="radio"]:checked + label,
+.star-rating-input input[type="radio"]:checked ~ input[type="radio"]:not(:checked) + label {
+    color: #d1d5db;
+}
+
+/* Use JS-driven class for selection instead of CSS sibling selectors */
+.star-rating-input label {
+    color: #d1d5db;
+}
+
+/* Highlight checked stars up to the selected value */
+.star-rating-input input[type="radio"]#star1:checked ~ label[for="star1"],
+.star-rating-input input[type="radio"]#star2:checked ~ label[for="star1"],
+.star-rating-input input[type="radio"]#star2:checked ~ label[for="star2"],
+.star-rating-input input[type="radio"]#star3:checked ~ label[for="star1"],
+.star-rating-input input[type="radio"]#star3:checked ~ label[for="star2"],
+.star-rating-input input[type="radio"]#star3:checked ~ label[for="star3"],
+.star-rating-input input[type="radio"]#star4:checked ~ label[for="star1"],
+.star-rating-input input[type="radio"]#star4:checked ~ label[for="star2"],
+.star-rating-input input[type="radio"]#star4:checked ~ label[for="star3"],
+.star-rating-input input[type="radio"]#star4:checked ~ label[for="star4"],
+.star-rating-input input[type="radio"]#star5:checked ~ label[for="star1"],
+.star-rating-input input[type="radio"]#star5:checked ~ label[for="star2"],
+.star-rating-input input[type="radio"]#star5:checked ~ label[for="star3"],
+.star-rating-input input[type="radio"]#star5:checked ~ label[for="star4"],
+.star-rating-input input[type="radio"]#star5:checked ~ label[for="star5"] {
+    color: #f7c948;
+}
+
+/* ===================================
+   Reviews Section
+   =================================== */
+.review-form-card {
+    background: rgba(0, 188, 212, 0.04);
+    border: 1px solid rgba(0, 188, 212, 0.15);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-item {
+    padding: 16px;
+    border: 1px solid #e8ecf1;
+    border-radius: var(--radius);
+    background: #fafbfc;
+    transition: box-shadow 0.2s ease;
+}
+
+.review-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #00a5bb);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.review-body {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    margin-top: 6px;
+}
+
+.stars-display i {
+    font-size: 0.85rem;
+}
+
+/* ===================================
+   Mobile Optimizations (Smartphones)
+   =================================== */
+@media (max-width: 768px) {
+    /* Contact Page Notice */
+    .public-message-notice {
+        padding: 12px 14px;
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+    
+    .public-message-notice i {
+        font-size: 1rem;
+    }
+
+    /* Dashboard Message Cards */
+    .message-card {
+        padding: 14px;
+    }
+    
+    .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .message-meta {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .message-actions {
+        justify-content: stretch;
+    }
+    
+    .message-actions .btn {
+        flex: 1;
+        text-align: center;
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* Replies */
+    .reply-item {
+        padding: 10px;
+    }
+    
+    .reply-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .reply-header strong {
+        font-size: 0.85rem;
+    }
+    
+    .reply-header .small {
+        margin-left: 0 !important;
+    }
+
+    /* Reviews Section */
+    .review-form-card {
+        padding: 16px;
+    }
+    
+    .star-rating-input label {
+        font-size: 1.4rem;
+        padding: 4px;
+    }
+    
+    .review-item {
+        padding: 14px;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .review-header > div:last-child {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* ===================================
+   Clickable Project Cards
+   =================================== */
+.project-card {
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.project-card-title a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* Stretch link across the entire card */
+}
+
+/* Ensure other links and interactive elements inside the card stay above the stretched link */
+.project-card .btn,
+.project-card a:not(.project-card-title a) {
+    position: relative;
+    z-index: 2; 
+}
