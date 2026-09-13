@@ -1,18 +1,13 @@
 <?php
 /**
  * Mailer Helper — StudentHub
- * Handles sending contact form messages directly to email (ent2023048@tec.rjt.ac.lk).
+ * Handles sending password reset emails.
  * 
  * Supports:
  * 1. Standard PHP mail()
  * 2. Pure PHP SMTP Socket client (e.g. Gmail SMTP with App Password)
  * 3. Local notification logging for development and viva demonstration
  */
-
-// Primary destination email address requested by author
-if (!defined('CONTACT_RECEIVER_EMAIL')) {
-    define('CONTACT_RECEIVER_EMAIL', 'ent2023048@tec.rjt.ac.lk');
-}
 
 // SMTP Configuration (Optional: set SMTP_ENABLED to true if using a Gmail App Password)
 if (!defined('SMTP_ENABLED')) {
@@ -25,131 +20,10 @@ if (!defined('SMTP_PORT')) {
     define('SMTP_PORT', 587); // 587 for TLS, 465 for SSL
 }
 if (!defined('SMTP_USER')) {
-    define('SMTP_USER', 'ent2023048@tec.rjt.ac.lk');
+    define('SMTP_USER', '');
 }
 if (!defined('SMTP_PASS')) {
     define('SMTP_PASS', ''); // 16-character Google App Password (e.g. 'abcd efgh ijkl mnop')
-}
-
-/**
- * Send Contact Message Notification to Administrator / Project Author
- * 
- * @param string $name Sender's name
- * @param string $email Sender's email
- * @param string $subject Message subject
- * @param string $message Message body
- * @param string $recipient Target email (defaults to CONTACT_RECEIVER_EMAIL)
- * @return array ['success' => bool, 'method' => string, 'error' => string]
- */
-function sendContactEmail($name, $email, $subject, $message, $recipient = CONTACT_RECEIVER_EMAIL) {
-    $mailSubject = "StudentHub Contact: " . $subject;
-    $dateStr = date('Y-m-d H:i:s');
-
-    // Build modern HTML email
-    $htmlBody = "
-    <!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <title>" . htmlspecialchars($mailSubject, ENT_QUOTES, 'UTF-8') . "</title>
-        <style>
-            body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f5f7fa; margin: 0; padding: 24px; color: #1a1a2e; }
-            .email-wrapper { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e8ecf1; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-            .email-header { background: #0d1b2a; padding: 24px 28px; text-align: left; border-bottom: 3px solid #00bcd4; }
-            .email-header h2 { margin: 0; color: #ffffff; font-size: 20px; font-weight: 700; }
-            .email-header span { color: #00bcd4; }
-            .email-body { padding: 28px; }
-            .badge-notice { display: inline-block; background: rgba(0,188,212,0.12); color: #008fa3; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 18px; }
-            .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            .meta-table td { padding: 8px 0; font-size: 14px; vertical-align: top; }
-            .meta-label { width: 120px; font-weight: 600; color: #6c757d; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
-            .meta-value { color: #1a1a2e; font-weight: 500; }
-            .message-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #00bcd4; border-radius: 6px; padding: 18px; margin-top: 10px; font-size: 15px; line-height: 1.6; color: #2d3748; }
-            .email-footer { background: #f8fafc; padding: 18px 28px; font-size: 12px; color: #8e99a4; text-align: center; border-top: 1px solid #edf2f7; }
-            .btn-reply { display: inline-block; background: #00bcd4; color: #ffffff !important; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 20px; }
-        </style>
-    </head>
-    <body>
-        <div class='email-wrapper'>
-            <div class='email-header'>
-                <h2>Student<span>Hub</span> &mdash; New Inquiry</h2>
-            </div>
-            <div class='email-body'>
-                <div class='badge-notice'>New Contact Form Message</div>
-                <p style='margin-top: 0; font-size: 15px;'>You received a new message submitted via the StudentHub contact page:</p>
-                
-                <table class='meta-table'>
-                    <tr>
-                        <td class='meta-label'>Sender</td>
-                        <td class='meta-value'>" . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "</td>
-                    </tr>
-                    <tr>
-                        <td class='meta-label'>Email</td>
-                        <td class='meta-value'><a href='mailto:" . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "' style='color: #00bcd4; text-decoration: none;'>" . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "</a></td>
-                    </tr>
-                    <tr>
-                        <td class='meta-label'>Subject</td>
-                        <td class='meta-value'><strong>" . htmlspecialchars($subject, ENT_QUOTES, 'UTF-8') . "</strong></td>
-                    </tr>
-                    <tr>
-                        <td class='meta-label'>Date</td>
-                        <td class='meta-value'>" . date('F j, Y \a\t g:i A', strtotime($dateStr)) . "</td>
-                    </tr>
-                </table>
-
-                <div style='margin-top: 15px;'>
-                    <div class='meta-label'>Message:</div>
-                    <div class='message-box'>
-                        " . nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')) . "
-                    </div>
-                </div>
-
-                <div style='text-align: center;'>
-                    <a href='mailto:" . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "?subject=" . rawurlencode("Re: " . $subject) . "' class='btn-reply'>
-                        Reply directly to " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "
-                    </a>
-                </div>
-            </div>
-            <div class='email-footer'>
-                This notification was dispatched to <strong>" . htmlspecialchars($recipient, ENT_QUOTES, 'UTF-8') . "</strong> from StudentHub (ICT 2209 Web Technologies Project).
-            </div>
-        </div>
-    </body>
-    </html>
-    ";
-
-    $result = ['success' => false, 'method' => 'none', 'error' => ''];
-
-    // 1. If SMTP is configured and enabled, try live SMTP
-    if (SMTP_ENABLED && !empty(SMTP_PASS)) {
-        $smtpResult = sendViaSmtpSocket($recipient, $mailSubject, $htmlBody, $name, $email);
-        if ($smtpResult['success']) {
-            $result['success'] = true;
-            $result['method'] = 'SMTP (smtp.gmail.com)';
-        } else {
-            $result['error'] = $smtpResult['error'];
-        }
-    }
-
-    // 2. Fallback to native PHP mail()
-    if (!$result['success']) {
-        $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: StudentHub <no-reply@studenthub.lk>\r\n";
-        $headers .= "Reply-To: " . addslashes($name) . " <" . $email . ">\r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-
-        $mailSent = @mail($recipient, $mailSubject, $htmlBody, $headers);
-        if ($mailSent) {
-            $result['success'] = true;
-            $result['method'] = 'PHP mail()';
-        }
-    }
-
-    // 3. Always log the dispatch locally for audit & viva demonstration
-    logMailDispatch($recipient, $name, $email, $subject, $result['method']);
-
-    return $result;
 }
 
 /**
