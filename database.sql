@@ -65,7 +65,36 @@ CREATE TABLE IF NOT EXISTS `messages` (
     `email` VARCHAR(100) NOT NULL,
     `subject` VARCHAR(200) NOT NULL,
     `message` TEXT NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `user_id` INT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================
+-- Message Replies Table
+-- ============================================
+CREATE TABLE IF NOT EXISTS `message_replies` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `message_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `reply_text` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`message_id`) REFERENCES `messages`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================
+-- Reviews Table (Project Reviews & Star Ratings)
+-- ============================================
+CREATE TABLE IF NOT EXISTS `reviews` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `project_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `rating` TINYINT NOT NULL CHECK (`rating` BETWEEN 1 AND 5),
+    `review_text` TEXT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ============================================
