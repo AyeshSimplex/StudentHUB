@@ -83,7 +83,7 @@ require_once 'includes/header.php';
                 </div>
             </div>
             <h2 class="auth-title">Create New Password</h2>
-            
+
             <?php if ($isValidToken && $user): ?>
                 <p class="auth-subtitle">
                     Resetting password for <strong><?php echo sanitize($user['full_name']); ?></strong> (<em><?php echo sanitize($user['email']); ?></em>)
@@ -120,7 +120,7 @@ require_once 'includes/header.php';
                         <label for="new_password" class="form-label">New Password <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                            <input type="password" class="form-control" id="new_password" name="new_password" 
+                            <input type="password" class="form-control" id="new_password" name="new_password"
                                    placeholder="Enter new password (min. 6 characters)" minlength="6" required>
                             <button class="btn btn-outline-secondary toggle-password" type="button" data-target="new_password">
                                 <i class="bi bi-eye"></i>
@@ -133,7 +133,7 @@ require_once 'includes/header.php';
                         <label for="confirm_password" class="form-label">Confirm New Password <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
                                    placeholder="Re-enter your new password" required>
                             <button class="btn btn-outline-secondary toggle-password" type="button" data-target="confirm_password">
                                 <i class="bi bi-eye"></i>

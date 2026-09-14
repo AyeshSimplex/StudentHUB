@@ -1,10 +1,10 @@
 <?php
 /**
  * Database Connection — StudentHub
- * 
+ *
  * This file establishes the connection to the MySQL database.
  * All database credentials are stored here in one place.
- * 
+ *
  * -----------------------------------------------
  * HOW TO CHANGE DATABASE CREDENTIALS:
  * If your WAMP MySQL has a different password,

@@ -1,7 +1,7 @@
 <?php
 /**
  * Common Functions — StudentHub
- * 
+ *
  * This file contains reusable helper functions used
  * across the application.
  */
@@ -42,7 +42,7 @@ function sanitize($data) {
 
 /**
  * Handle image upload with validation
- * 
+ *
  * @param array $file The $_FILES array element
  * @param string $uploadDir The target upload directory
  * @return array ['success' => bool, 'filename' => string, 'error' => string]
@@ -396,9 +396,9 @@ function uploadMultipleImages($fileInput, $uploadDir = 'uploads/projects/') {
 function deleteProjectGalleryImage($conn, $imageId, $userId) {
     initProjectImagesTable($conn);
     // Fetch image info and verify ownership via projects table
-    $stmt = $conn->prepare("SELECT pi.id, pi.project_id, pi.image, p.user_id, p.image as cover_image 
-                            FROM project_images pi 
-                            JOIN projects p ON pi.project_id = p.id 
+    $stmt = $conn->prepare("SELECT pi.id, pi.project_id, pi.image, p.user_id, p.image as cover_image
+                            FROM project_images pi
+                            JOIN projects p ON pi.project_id = p.id
                             WHERE pi.id = ?");
     $stmt->bind_param("i", $imageId);
     $stmt->execute();

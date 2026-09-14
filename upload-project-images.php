@@ -10,8 +10,8 @@ requireLogin();
 
 $userId = $_SESSION['user_id'];
 $projectId = isset($_POST['project_id']) ? intval($_POST['project_id']) : 0;
-$redirect = isset($_POST['redirect']) && $_POST['redirect'] === 'edit' 
-            ? "edit-project.php?id=$projectId" 
+$redirect = isset($_POST['redirect']) && $_POST['redirect'] === 'edit'
+            ? "edit-project.php?id=$projectId"
             : "project-details.php?id=$projectId";
 
 if ($projectId <= 0) {

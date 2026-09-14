@@ -24,17 +24,17 @@ require_once 'includes/header.php';
             <div class="col-lg-6 fade-in">
                 <h2 class="section-title mb-3">Our Mission</h2>
                 <p class="about-content">
-                    StudentHub was built with one simple goal — to create a digital space where university students 
+                    StudentHub was built with one simple goal — to create a digital space where university students
                     can showcase their academic, technical and creative work to a wider audience.
                 </p>
                 <p class="about-content">
-                    We believe that every student project, whether it is a web application, a research paper, 
-                    an IoT prototype or a creative design, deserves a place to be seen and appreciated. 
+                    We believe that every student project, whether it is a web application, a research paper,
+                    an IoT prototype or a creative design, deserves a place to be seen and appreciated.
                     StudentHub provides that platform.
                 </p>
                 <p class="about-content">
-                    Our platform is designed for students of the Rajarata University of Sri Lanka, 
-                    specifically the Faculty of Technology, to present their work in a professional 
+                    Our platform is designed for students of the Rajarata University of Sri Lanka,
+                    specifically the Faculty of Technology, to present their work in a professional
                     and accessible manner.
                 </p>
             </div>

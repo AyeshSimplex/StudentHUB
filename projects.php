@@ -37,7 +37,7 @@ $stmt->close();
                 <div class="col-lg-5 col-md-12">
                     <div class="position-relative">
                         <i class="bi bi-search position-absolute" style="left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                        <input type="text" id="projectSearch" class="form-control filter-input" style="padding-left: 40px;" 
+                        <input type="text" id="projectSearch" class="form-control filter-input" style="padding-left: 40px;"
                                placeholder="Search projects, technologies, students..." aria-label="Search projects">
                     </div>
                 </div>
@@ -80,12 +80,12 @@ $stmt->close();
                          data-technologies="<?php echo sanitize($project['technologies']); ?>"
                          data-author="<?php echo sanitize($project['full_name']); ?>"
                          data-date="<?php echo $project['created_at']; ?>">
-                        
+
                         <div class="project-card">
                             <!-- Image -->
                             <?php if ($project['image'] && file_exists('uploads/projects/' . $project['image'])): ?>
                                 <div class="project-card-image">
-                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>" 
+                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>"
                                          alt="<?php echo sanitize($project['title']); ?>">
                                 </div>
                             <?php else: ?>

@@ -145,7 +145,7 @@ require_once 'includes/header.php';
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="username" name="username" 
+                            <input type="text" class="form-control" id="username" name="username"
                                    value="<?php echo sanitize($old['username']); ?>" placeholder="e.g. ayesh" required>
                             <div class="form-error"></div>
                         </div>
@@ -153,7 +153,7 @@ require_once 'includes/header.php';
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="full_name" class="form-label">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="full_name" name="full_name" 
+                            <input type="text" class="form-control" id="full_name" name="full_name"
                                    value="<?php echo sanitize($old['full_name']); ?>" placeholder="e.g. Ayesh Rathnayaka" required>
                             <div class="form-error"></div>
                         </div>
@@ -162,7 +162,7 @@ require_once 'includes/header.php';
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" 
+                    <input type="email" class="form-control" id="email" name="email"
                            value="<?php echo sanitize($old['email']); ?>" placeholder="e.g. ayesh@studenthub.lk" required>
                     <div class="form-error"></div>
                 </div>
@@ -171,7 +171,7 @@ require_once 'includes/header.php';
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="password" name="password" 
+                            <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Minimum 6 characters" required>
                             <div class="form-error"></div>
                         </div>
@@ -179,7 +179,7 @@ require_once 'includes/header.php';
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
                                    placeholder="Repeat password" required>
                             <div class="form-error"></div>
                         </div>
@@ -201,8 +201,8 @@ require_once 'includes/header.php';
 
                 <div class="mb-4">
                     <label for="skills" class="form-label">Skills</label>
-                    <input type="text" class="form-control" id="skills" name="skills" 
-                           value="<?php echo sanitize($old['skills']); ?>" 
+                    <input type="text" class="form-control" id="skills" name="skills"
+                           value="<?php echo sanitize($old['skills']); ?>"
                            placeholder="e.g. PHP, JavaScript, Python, HTML, CSS">
                     <small class="text-muted">Separate skills with commas</small>
                 </div>

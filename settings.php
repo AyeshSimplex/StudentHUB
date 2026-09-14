@@ -380,24 +380,24 @@ require_once 'includes/header.php';
 
                     <!-- Navigation Pills -->
                     <div class="nav flex-column nav-pills settings-nav" id="settings-tab" role="tablist" aria-orientation="vertical">
-                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'avatar' ? 'active' : ''; ?>" 
+                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'avatar' ? 'active' : ''; ?>"
                                 id="avatar-tab" data-bs-toggle="pill" data-bs-target="#tab-avatar" type="button" role="tab">
                             <i class="bi bi-camera-fill me-2"></i>Profile Photo
                         </button>
-                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'email' ? 'active' : ''; ?>" 
+                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'email' ? 'active' : ''; ?>"
                                 id="email-tab" data-bs-toggle="pill" data-bs-target="#tab-email" type="button" role="tab">
                             <i class="bi bi-envelope-at me-2"></i>Change Email Address
                         </button>
-                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'password' ? 'active' : ''; ?>" 
+                        <button class="nav-link text-start mb-2 py-3 px-3 <?php echo $activeTab === 'password' ? 'active' : ''; ?>"
                                 id="password-tab" data-bs-toggle="pill" data-bs-target="#tab-password" type="button" role="tab">
                             <i class="bi bi-shield-lock me-2"></i>Change Password
                         </button>
-                        <button class="nav-link text-start py-3 px-3 <?php echo $activeTab === 'profile' ? 'active' : ''; ?>" 
+                        <button class="nav-link text-start py-3 px-3 <?php echo $activeTab === 'profile' ? 'active' : ''; ?>"
                                 id="profile-tab" data-bs-toggle="pill" data-bs-target="#tab-profile" type="button" role="tab">
                             <i class="bi bi-person-lines-fill me-2"></i>Edit Profile Details
                         </button>
                         <hr class="my-2 border-secondary opacity-25">
-                        <button class="nav-link text-start text-danger py-3 px-3 <?php echo $activeTab === 'delete' ? 'active' : ''; ?>" 
+                        <button class="nav-link text-start text-danger py-3 px-3 <?php echo $activeTab === 'delete' ? 'active' : ''; ?>"
                                 id="delete-tab" data-bs-toggle="pill" data-bs-target="#tab-delete" type="button" role="tab">
                             <i class="bi bi-trash3-fill me-2"></i>Delete Account
                         </button>
@@ -423,11 +423,11 @@ require_once 'includes/header.php';
                         <!-- ===================================
                              TAB: PROFILE PHOTO
                              =================================== -->
-                        <div class="tab-pane fade <?php echo $activeTab === 'avatar' ? 'show active' : ''; ?>" 
+                        <div class="tab-pane fade <?php echo $activeTab === 'avatar' ? 'show active' : ''; ?>"
                              id="tab-avatar" role="tabpanel" aria-labelledby="avatar-tab">
-                            
+
                             <div class="d-flex align-items-center mb-4">
-                                <div class="dashboard-stat-icon me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(0,188,212,0.1); color: var(--accent);">
+                                <div class="dashboard-stat-icon flex-shrink-0 m-0 me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(0,188,212,0.1); color: var(--accent);">
                                     <i class="bi bi-camera-fill"></i>
                                 </div>
                                 <div>
@@ -481,7 +481,7 @@ require_once 'includes/header.php';
 
                                 <div class="mb-4">
                                     <label for="settings_avatar_input" class="form-label fw-semibold">Select New Profile Photo</label>
-                                    
+
                                     <div class="avatar-dropzone p-4 text-center rounded-3 border border-2 border-dashed" id="settingsDropZone">
                                         <div id="settingsNewPreviewWrapper" class="d-none mb-3">
                                             <img src="" alt="New Photo Preview" id="settingsNewPreviewImg" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--accent);">
@@ -491,18 +491,18 @@ require_once 'includes/header.php';
                                         <i class="bi bi-cloud-arrow-up fs-1 text-muted d-block mb-2" id="settingsUploadIcon"></i>
                                         <p class="mb-1 fw-semibold small">Click below to choose an image</p>
                                         <p class="text-muted small mb-3">Supports JPG, JPEG, PNG, and WEBP formats up to 5MB.</p>
-                                        
+
                                         <input type="file" class="d-none" id="settings_avatar_input" name="profile_image" accept="image/jpeg,image/png,image/webp" required>
-                                        
+
                                         <button type="button" class="btn btn-outline-accent btn-sm px-3" onclick="document.getElementById('settings_avatar_input').click();">
                                             <i class="bi bi-image me-1"></i>Choose Image File
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Square images work best.</small>
-                                    <button type="submit" class="btn btn-accent px-4" id="saveAvatarBtn" disabled>
+                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-2">
+                                    <small class="text-muted flex-shrink-0"><i class="bi bi-info-circle me-1"></i>Square images work best.</small>
+                                    <button type="submit" class="btn btn-accent w-100 w-sm-auto px-4" id="saveAvatarBtn" disabled>
                                         <i class="bi bi-upload me-1"></i>Upload & Save Photo
                                     </button>
                                 </div>
@@ -512,11 +512,11 @@ require_once 'includes/header.php';
                         <!-- ===================================
                              TAB 1: CHANGE EMAIL
                              =================================== -->
-                        <div class="tab-pane fade <?php echo $activeTab === 'email' ? 'show active' : ''; ?>" 
+                        <div class="tab-pane fade <?php echo $activeTab === 'email' ? 'show active' : ''; ?>"
                              id="tab-email" role="tabpanel" aria-labelledby="email-tab">
-                            
+
                             <div class="d-flex align-items-center mb-4">
-                                <div class="dashboard-stat-icon me-3" style="width: 48px; height: 48px; font-size: 1.25rem;">
+                                <div class="dashboard-stat-icon flex-shrink-0 m-0 me-3" style="width: 48px; height: 48px; font-size: 1.25rem;">
                                     <i class="bi bi-envelope-at"></i>
                                 </div>
                                 <div>
@@ -553,7 +553,7 @@ require_once 'includes/header.php';
                                     <label for="new_email" class="form-label">New Email Address <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-at"></i></span>
-                                        <input type="email" class="form-control" id="new_email" name="new_email" 
+                                        <input type="email" class="form-control" id="new_email" name="new_email"
                                                placeholder="name@example.com" required>
                                     </div>
                                 </div>
@@ -562,7 +562,7 @@ require_once 'includes/header.php';
                                     <label for="confirm_email" class="form-label">Confirm New Email <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
-                                        <input type="email" class="form-control" id="confirm_email" name="confirm_email" 
+                                        <input type="email" class="form-control" id="confirm_email" name="confirm_email"
                                                placeholder="Re-enter your new email" required>
                                     </div>
                                 </div>
@@ -571,7 +571,7 @@ require_once 'includes/header.php';
                                     <label for="email_current_password" class="form-label">Current Password <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-key"></i></span>
-                                        <input type="password" class="form-control" id="email_current_password" name="current_password" 
+                                        <input type="password" class="form-control" id="email_current_password" name="current_password"
                                                placeholder="Enter current password to verify identity" required>
                                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="email_current_password">
                                             <i class="bi bi-eye"></i>
@@ -581,7 +581,7 @@ require_once 'includes/header.php';
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-accent px-4">
+                                    <button type="submit" class="btn btn-accent w-100 w-md-auto px-4">
                                         <i class="bi bi-check-lg me-1"></i>Save New Email
                                     </button>
                                 </div>
@@ -591,11 +591,11 @@ require_once 'includes/header.php';
                         <!-- ===================================
                              TAB 2: CHANGE PASSWORD
                              =================================== -->
-                        <div class="tab-pane fade <?php echo $activeTab === 'password' ? 'show active' : ''; ?>" 
+                        <div class="tab-pane fade <?php echo $activeTab === 'password' ? 'show active' : ''; ?>"
                              id="tab-password" role="tabpanel" aria-labelledby="password-tab">
-                            
+
                             <div class="d-flex align-items-center mb-4">
-                                <div class="dashboard-stat-icon me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(124,77,255,0.1); color: #7c4dff;">
+                                <div class="dashboard-stat-icon flex-shrink-0 m-0 me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(124,77,255,0.1); color: #7c4dff;">
                                     <i class="bi bi-shield-lock"></i>
                                 </div>
                                 <div>
@@ -623,7 +623,7 @@ require_once 'includes/header.php';
                                     <label for="current_password" class="form-label">Current Password <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                        <input type="password" class="form-control" id="current_password" name="current_password" 
+                                        <input type="password" class="form-control" id="current_password" name="current_password"
                                                placeholder="Enter your current password" required>
                                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="current_password">
                                             <i class="bi bi-eye"></i>
@@ -635,7 +635,7 @@ require_once 'includes/header.php';
                                     <label for="new_password" class="form-label">New Password <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
-                                        <input type="password" class="form-control" id="new_password" name="new_password" 
+                                        <input type="password" class="form-control" id="new_password" name="new_password"
                                                placeholder="Enter new password (min. 6 characters)" minlength="6" required>
                                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="new_password">
                                             <i class="bi bi-eye"></i>
@@ -648,7 +648,7 @@ require_once 'includes/header.php';
                                     <label for="confirm_password" class="form-label">Confirm New Password <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
                                                placeholder="Re-enter your new password" required>
                                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="confirm_password">
                                             <i class="bi bi-eye"></i>
@@ -657,7 +657,7 @@ require_once 'includes/header.php';
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-accent px-4">
+                                    <button type="submit" class="btn btn-accent w-100 w-md-auto px-4">
                                         <i class="bi bi-shield-check me-1"></i>Update Password
                                     </button>
                                 </div>
@@ -667,11 +667,11 @@ require_once 'includes/header.php';
                         <!-- ===================================
                              TAB 3: EDIT PROFILE
                              =================================== -->
-                        <div class="tab-pane fade <?php echo $activeTab === 'profile' ? 'show active' : ''; ?>" 
+                        <div class="tab-pane fade <?php echo $activeTab === 'profile' ? 'show active' : ''; ?>"
                              id="tab-profile" role="tabpanel" aria-labelledby="profile-tab">
-                            
+
                             <div class="d-flex align-items-center mb-4">
-                                <div class="dashboard-stat-icon me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(25,135,84,0.1); color: #198754;">
+                                <div class="dashboard-stat-icon flex-shrink-0 m-0 me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(19,135,84,0.1); color: #198754;">
                                     <i class="bi bi-person-lines-fill"></i>
                                 </div>
                                 <div>
@@ -726,7 +726,7 @@ require_once 'includes/header.php';
 
                                 <div class="mb-3">
                                     <label for="full_name" class="form-label">Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="full_name" name="full_name" 
+                                    <input type="text" class="form-control" id="full_name" name="full_name"
                                            value="<?php echo sanitize($currentUser['full_name']); ?>" required>
                                 </div>
 
@@ -753,14 +753,14 @@ require_once 'includes/header.php';
 
                                 <div class="mb-4">
                                     <label for="skills" class="form-label">Skills</label>
-                                    <input type="text" class="form-control" id="skills" name="skills" 
-                                           value="<?php echo sanitize($currentUser['skills']); ?>" 
+                                    <input type="text" class="form-control" id="skills" name="skills"
+                                           value="<?php echo sanitize($currentUser['skills']); ?>"
                                            placeholder="e.g. PHP, MySQL, JavaScript, Python, Arduino">
                                     <div class="form-text">Separate skills with commas. These appear on your student profile.</div>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-accent px-4">
+                                    <button type="submit" class="btn btn-accent w-100 w-md-auto px-4">
                                         <i class="bi bi-save me-1"></i>Save Profile
                                     </button>
                                 </div>
@@ -770,11 +770,11 @@ require_once 'includes/header.php';
                         <!-- ===================================
                              TAB 5: DELETE ACCOUNT (DANGER ZONE)
                              =================================== -->
-                        <div class="tab-pane fade <?php echo $activeTab === 'delete' ? 'show active' : ''; ?>" 
+                        <div class="tab-pane fade <?php echo $activeTab === 'delete' ? 'show active' : ''; ?>"
                              id="tab-delete" role="tabpanel" aria-labelledby="delete-tab">
-                            
+
                             <div class="d-flex align-items-center mb-4">
-                                <div class="dashboard-stat-icon me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(220,53,69,0.1); color: #dc3545;">
+                                <div class="dashboard-stat-icon flex-shrink-0 m-0 me-3" style="width: 48px; height: 48px; font-size: 1.25rem; background: rgba(220,53,69,0.1); color: #dc3545;">
                                     <i class="bi bi-exclamation-triangle-fill"></i>
                                 </div>
                                 <div>
@@ -823,7 +823,7 @@ require_once 'includes/header.php';
                                     </label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-key"></i></span>
-                                        <input type="password" class="form-control" id="delete_current_password" name="current_password" 
+                                        <input type="password" class="form-control" id="delete_current_password" name="current_password"
                                                placeholder="Enter your current password" required>
                                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="delete_current_password">
                                             <i class="bi bi-eye"></i>
@@ -836,7 +836,7 @@ require_once 'includes/header.php';
                                     <label for="confirm_delete_text" class="form-label fw-semibold">
                                         Type <span class="badge bg-danger">DELETE</span> to confirm <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="confirm_delete_text" name="confirm_delete_text" 
+                                    <input type="text" class="form-control" id="confirm_delete_text" name="confirm_delete_text"
                                            placeholder="Type DELETE" required autocomplete="off">
                                 </div>
 
@@ -847,13 +847,11 @@ require_once 'includes/header.php';
                                     </label>
                                 </div>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
-                                    </a>
-                                    <button type="button" class="btn btn-danger px-4" id="deleteAccountBtn">
-                                        <i class="bi bi-trash3 me-1"></i>Delete Account Permanently
+                                <div class="d-grid gap-3 d-md-flex">
+                                    <button type="button" class="btn btn-danger w-100 w-md-auto px-4" id="deleteAccountBtn">
+                                        <i class="bi bi-trash me-2"></i>Delete Account
                                     </button>
+                                    <a href="dashboard.php" class="btn btn-outline-secondary w-100 w-md-auto">Cancel</a>
                                 </div>
                             </form>
                         </div>

@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Project updated successfully!';
             $stmt->close();
-            
+
             // Redirect based on user choice
             if (isset($_POST['save_action']) && $_POST['save_action'] === 'view') {
                 header("Location: project-details.php?id=$projectId");
@@ -234,10 +234,10 @@ require_once 'includes/header.php';
                             <p class="text-muted small mb-4">Edit project details, primary cover image, and skills demonstrated.</p>
 
                             <form id="projectForm" method="POST" action="edit-project.php?id=<?php echo $projectId; ?>" enctype="multipart/form-data" novalidate>
-                                
+
                                 <div class="mb-3">
                                     <label for="project_title" class="form-label">Project Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="project_title" name="title" 
+                                    <input type="text" class="form-control" id="project_title" name="title"
                                            value="<?php echo sanitize($old['title']); ?>" required>
                                     <div class="form-error"></div>
                                 </div>
@@ -266,7 +266,7 @@ require_once 'includes/header.php';
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="project_technologies" class="form-label">Technologies Used <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="project_technologies" name="technologies" 
+                                            <input type="text" class="form-control" id="project_technologies" name="technologies"
                                                    value="<?php echo sanitize($old['technologies']); ?>" required>
                                             <div class="form-error"></div>
                                             <small class="text-muted">Separate with commas</small>
@@ -276,7 +276,7 @@ require_once 'includes/header.php';
 
                                 <div class="mb-3">
                                     <label for="project_skills" class="form-label">Skills Demonstrated</label>
-                                    <input type="text" class="form-control" id="project_skills" name="skills" 
+                                    <input type="text" class="form-control" id="project_skills" name="skills"
                                            value="<?php echo sanitize($old['skills']); ?>">
                                     <small class="text-muted">Separate with commas (e.g. IoT, Circuit Design, PHP)</small>
                                 </div>
@@ -284,10 +284,10 @@ require_once 'includes/header.php';
                                 <!-- Cover Image Field -->
                                 <div class="mb-4 p-3 rounded border" style="background: var(--bg-alt);">
                                     <label for="project_image" class="form-label fw-semibold">Primary Cover Image</label>
-                                    
+
                                     <?php if ($project['image'] && file_exists('uploads/projects/' . $project['image'])): ?>
                                         <div class="d-flex align-items-center gap-3 mb-3 p-2 rounded bg-white border">
-                                            <img src="uploads/projects/<?php echo sanitize($project['image']); ?>" 
+                                            <img src="uploads/projects/<?php echo sanitize($project['image']); ?>"
                                                  alt="Current cover" class="rounded" style="height: 70px; width: 100px; object-fit: cover;">
                                             <div>
                                                 <span class="badge bg-primary mb-1"><i class="bi bi-star-fill text-warning me-1"></i>Current Cover</span>
@@ -319,14 +319,14 @@ require_once 'includes/header.php';
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="project_url" class="form-label">Live Project / Demo URL</label>
-                                            <input type="url" class="form-control" id="project_url" name="project_url" 
+                                            <input type="url" class="form-control" id="project_url" name="project_url"
                                                    value="<?php echo sanitize($old['project_url']); ?>" placeholder="https://myproject.example.com">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="github_url" class="form-label">GitHub Repository URL</label>
-                                            <input type="url" class="form-control" id="github_url" name="github_url" 
+                                            <input type="url" class="form-control" id="github_url" name="github_url"
                                                    value="<?php echo sanitize($old['github_url']); ?>" placeholder="https://github.com/user/repo">
                                         </div>
                                     </div>
@@ -334,14 +334,14 @@ require_once 'includes/header.php';
 
                                 <hr class="my-4">
 
-                                <div class="d-flex flex-wrap gap-2">
-                                    <button type="submit" name="save_action" value="save" class="btn btn-accent flex-grow-1">
+                                <div class="d-grid gap-3 d-md-flex mt-3">
+                                    <button type="submit" name="save_action" value="save" class="btn btn-accent flex-fill">
                                         <i class="bi bi-check-circle-fill me-2"></i>Save Changes
                                     </button>
-                                    <button type="submit" name="save_action" value="view" class="btn btn-outline-accent">
+                                    <button type="submit" name="save_action" value="view" class="btn btn-outline-accent flex-fill">
                                         <i class="bi bi-save me-1"></i>Save & View Live
                                     </button>
-                                    <a href="project-details.php?id=<?php echo $projectId; ?>" class="btn btn-outline-secondary">
+                                    <a href="project-details.php?id=<?php echo $projectId; ?>" class="btn btn-outline-secondary flex-fill">
                                         Cancel
                                     </a>
                                 </div>
@@ -394,13 +394,13 @@ require_once 'includes/header.php';
 
                             <?php if (!empty($galleryImages)): ?>
                                 <div class="row g-2">
-                                    <?php foreach ($galleryImages as $img): 
+                                    <?php foreach ($galleryImages as $img):
                                         $isCover = ($project['image'] === $img['image']);
                                     ?>
                                         <div class="col-6">
                                             <div class="position-relative rounded border overflow-hidden bg-light" style="height: 130px;">
-                                                <img src="uploads/projects/<?php echo sanitize($img['image']); ?>" 
-                                                     alt="<?php echo sanitize($img['caption'] ?? 'Project image'); ?>" 
+                                                <img src="uploads/projects/<?php echo sanitize($img['image']); ?>"
+                                                     alt="<?php echo sanitize($img['caption'] ?? 'Project image'); ?>"
                                                      class="w-100 h-100" style="object-fit: cover;">
 
                                                 <?php if ($isCover): ?>
@@ -411,7 +411,7 @@ require_once 'includes/header.php';
 
                                                 <div class="position-absolute bottom-0 start-0 end-0 p-1 bg-dark bg-opacity-75 d-flex justify-content-between align-items-center">
                                                     <?php if (!$isCover): ?>
-                                                        <a href="set-cover-image.php?project_id=<?php echo $projectId; ?>&image=<?php echo urlencode($img['image']); ?>" 
+                                                        <a href="set-cover-image.php?project_id=<?php echo $projectId; ?>&image=<?php echo urlencode($img['image']); ?>"
                                                            class="btn btn-sm btn-outline-light py-0 px-1" style="font-size: 0.7rem;" title="Make Cover Image">
                                                             <i class="bi bi-star"></i> Set Cover
                                                         </a>
@@ -419,8 +419,8 @@ require_once 'includes/header.php';
                                                         <span class="text-white-50" style="font-size: 0.7rem;"><i class="bi bi-check2"></i> Active</span>
                                                     <?php endif; ?>
 
-                                                    <a href="delete-project-image.php?id=<?php echo $img['id']; ?>&project_id=<?php echo $projectId; ?>" 
-                                                       class="btn btn-sm btn-danger py-0 px-1" style="font-size: 0.7rem;" 
+                                                    <a href="delete-project-image.php?id=<?php echo $img['id']; ?>&project_id=<?php echo $projectId; ?>"
+                                                       class="btn btn-sm btn-danger py-0 px-1" style="font-size: 0.7rem;"
                                                        onclick="return confirm('Are you sure you want to delete this image?');" title="Delete Image">
                                                         <i class="bi bi-trash"></i>
                                                     </a>

@@ -11,7 +11,7 @@ requireLogin();
 $userId = $_SESSION['user_id'];
 $projectId = isset($_REQUEST['project_id']) ? intval($_REQUEST['project_id']) : 0;
 $imageName = isset($_REQUEST['image']) ? basename(trim($_REQUEST['image'])) : '';
-$isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') 
+$isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
           || (isset($_REQUEST['format']) && $_REQUEST['format'] === 'json');
 
 if ($projectId <= 0 || empty($imageName)) {

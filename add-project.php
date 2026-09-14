@@ -141,14 +141,14 @@ require_once 'includes/header.php';
                     <form id="projectForm" method="POST" action="add-project.php" enctype="multipart/form-data" novalidate>
                         <div class="mb-3">
                             <label for="project_title" class="form-label">Project Title <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="project_title" name="title" 
+                            <input type="text" class="form-control" id="project_title" name="title"
                                    value="<?php echo sanitize($old['title']); ?>" placeholder="e.g. Smart Waste Management System" required>
                             <div class="form-error"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="project_description" class="form-label">Description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="project_description" name="description" rows="5" 
+                            <textarea class="form-control" id="project_description" name="description" rows="5"
                                       placeholder="Describe your project in detail..." required><?php echo sanitize($old['description']); ?></textarea>
                             <div class="form-error"></div>
                         </div>
@@ -171,7 +171,7 @@ require_once 'includes/header.php';
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="project_technologies" class="form-label">Technologies Used <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="project_technologies" name="technologies" 
+                                    <input type="text" class="form-control" id="project_technologies" name="technologies"
                                            value="<?php echo sanitize($old['technologies']); ?>" placeholder="e.g. PHP, MySQL, JavaScript" required>
                                     <div class="form-error"></div>
                                     <small class="text-muted">Separate with commas</small>
@@ -181,7 +181,7 @@ require_once 'includes/header.php';
 
                         <div class="mb-3">
                             <label for="project_skills" class="form-label">Skills Demonstrated</label>
-                            <input type="text" class="form-control" id="project_skills" name="skills" 
+                            <input type="text" class="form-control" id="project_skills" name="skills"
                                    value="<?php echo sanitize($old['skills']); ?>" placeholder="e.g. Full Stack Development, Database Design">
                             <small class="text-muted">Separate with commas</small>
                         </div>
@@ -203,24 +203,24 @@ require_once 'includes/header.php';
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="project_url" class="form-label">Project URL</label>
-                                    <input type="url" class="form-control" id="project_url" name="project_url" 
+                                    <input type="url" class="form-control" id="project_url" name="project_url"
                                            value="<?php echo sanitize($old['project_url']); ?>" placeholder="https://...">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="github_url" class="form-label">GitHub URL</label>
-                                    <input type="url" class="form-control" id="github_url" name="github_url" 
+                                    <input type="url" class="form-control" id="github_url" name="github_url"
                                            value="<?php echo sanitize($old['github_url']); ?>" placeholder="https://github.com/...">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="d-flex gap-3 mt-2">
-                            <button type="submit" class="btn btn-accent flex-grow-1">
+                        <div class="d-grid gap-3 d-md-flex mt-3">
+                            <button type="submit" class="btn btn-accent flex-fill">
                                 <i class="bi bi-plus-lg me-2"></i>Add Project
                             </button>
-                            <a href="dashboard.php" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="dashboard.php" class="btn btn-outline-secondary flex-fill">Cancel</a>
                         </div>
                     </form>
                 </div>

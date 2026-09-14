@@ -100,7 +100,7 @@ require_once 'includes/header.php';
                 <h1><?php echo sanitize($project['title']); ?></h1>
                 <p><span class="project-category-badge" style="font-size: 0.85rem;"><?php echo sanitize($project['category']); ?></span></p>
             </div>
-            
+
             <?php if ($isAuthor): ?>
                 <div class="d-flex flex-wrap gap-2">
                     <a href="edit-project.php?id=<?php echo $projectId; ?>" class="btn btn-accent">
@@ -109,7 +109,7 @@ require_once 'includes/header.php';
                     <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addImagesModal">
                         <i class="bi bi-images me-1"></i>+ Add Images
                     </button>
-                    <a href="delete-project.php?id=<?php echo $projectId; ?>" class="btn btn-outline-danger" 
+                    <a href="delete-project.php?id=<?php echo $projectId; ?>" class="btn btn-outline-danger"
                        onclick="return confirm('Are you sure you want to delete this project? This cannot be undone.');">
                         <i class="bi bi-trash"></i>
                     </a>
@@ -181,14 +181,14 @@ require_once 'includes/header.php';
                     <!-- Main Active Image -->
                     <div class="project-detail-image position-relative rounded overflow-hidden shadow-sm" style="background: #0f172a; min-height: 320px;">
                         <?php if (!empty($allImages)): ?>
-                            <img id="mainGalleryImage" 
-                                 src="uploads/projects/<?php echo sanitize($allImages[0]['image']); ?>" 
+                            <img id="mainGalleryImage"
+                                 src="uploads/projects/<?php echo sanitize($allImages[0]['image']); ?>"
                                  alt="<?php echo sanitize($project['title']); ?>"
-                                 class="w-100 h-100" 
+                                 class="w-100 h-100"
                                  style="object-fit: cover; max-height: 420px; transition: opacity 0.3s ease; cursor: pointer;"
                                  onclick="openLightbox(this.src, document.getElementById('mainGalleryCaption').innerText);">
-                            
-                            <div id="mainGalleryCaption" class="position-absolute bottom-0 start-0 end-0 px-3 py-2 text-white small" 
+
+                            <div id="mainGalleryCaption" class="position-absolute bottom-0 start-0 end-0 px-3 py-2 text-white small"
                                  style="background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);">
                                 <?php echo sanitize($allImages[0]['caption'] ?? $project['title']); ?>
                             </div>
@@ -209,10 +209,10 @@ require_once 'includes/header.php';
                     <?php if (count($allImages) > 1 || $isAuthor): ?>
                         <div class="d-flex gap-2 mt-3 overflow-auto pb-2 project-thumbnails-strip align-items-center">
                             <?php foreach ($allImages as $idx => $img): ?>
-                                <div class="gallery-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>" 
+                                <div class="gallery-thumb-item <?php echo $idx === 0 ? 'active' : ''; ?>"
                                      style="width: 80px; height: 60px; flex-shrink: 0; cursor: pointer; border-radius: 8px; overflow: hidden; border: 2px solid <?php echo $idx === 0 ? 'var(--accent)' : 'transparent'; ?>;"
                                      onclick="switchGalleryImage('uploads/projects/<?php echo sanitize($img['image']); ?>', '<?php echo addslashes(sanitize($img['caption'])); ?>', this)">
-                                    <img src="uploads/projects/<?php echo sanitize($img['image']); ?>" 
+                                    <img src="uploads/projects/<?php echo sanitize($img['image']); ?>"
                                          alt="thumb" class="w-100 h-100" style="object-fit: cover;">
                                 </div>
                             <?php endforeach; ?>
@@ -394,13 +394,13 @@ require_once 'includes/header.php';
                                 <h6 class="mb-3"><i class="bi bi-pencil-square me-1"></i><?php echo $userReview ? 'Update Your Review' : 'Write a Review'; ?></h6>
                                 <form method="POST" action="submit-review.php">
                                     <input type="hidden" name="project_id" value="<?php echo $projectId; ?>">
-                                    
+
                                     <!-- Star Rating Selection -->
                                     <div class="mb-3">
                                         <label class="form-label">Your Rating <span class="text-danger">*</span></label>
                                         <div class="star-rating-input" id="starRatingInput">
                                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <input type="radio" name="rating" value="<?php echo $i; ?>" id="star<?php echo $i; ?>" 
+                                                <input type="radio" name="rating" value="<?php echo $i; ?>" id="star<?php echo $i; ?>"
                                                        <?php echo ($userReview && $userReview['rating'] == $i) ? 'checked' : ''; ?> required>
                                                 <label for="star<?php echo $i; ?>" title="<?php echo $i; ?> star<?php echo $i > 1 ? 's' : ''; ?>">
                                                     <i class="bi bi-star-fill"></i>
@@ -411,11 +411,11 @@ require_once 'includes/header.php';
 
                                     <div class="mb-3">
                                         <label for="review_text" class="form-label">Your Review (Optional)</label>
-                                        <textarea class="form-control" id="review_text" name="review_text" rows="3" 
+                                        <textarea class="form-control" id="review_text" name="review_text" rows="3"
                                                   placeholder="Share your thoughts about this project..."><?php echo $userReview ? sanitize($userReview['review_text']) : ''; ?></textarea>
                                     </div>
 
-                                    <button type="submit" class="btn btn-accent">
+                                    <button type="submit" class="btn btn-accent w-100 w-md-auto">
                                         <i class="bi bi-send me-1"></i><?php echo $userReview ? 'Update Review' : 'Submit Review'; ?>
                                     </button>
                                 </form>
@@ -423,7 +423,7 @@ require_once 'includes/header.php';
                         <?php else: ?>
                             <div class="text-center py-3 mb-4" style="background: rgba(0,188,212,0.05); border-radius: var(--radius);">
                                 <p class="mb-2 text-muted"><i class="bi bi-person-lock me-1"></i>Please log in to leave a review.</p>
-                                <a href="login.php" class="btn btn-sm btn-accent">Log In</a>
+                                <a href="login.php" class="btn btn-sm btn-accent w-100 w-md-auto px-4">Log In</a>
                             </div>
                         <?php endif; ?>
 
@@ -453,7 +453,7 @@ require_once 'includes/header.php';
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="text-muted small"><?php echo getTimeAgo($rev['created_at']); ?></span>
                                                 <?php if ($currentUserId && ($rev['user_id'] == $currentUserId || isAdmin())): ?>
-                                                    <a href="delete-review.php?id=<?php echo $rev['id']; ?>&project_id=<?php echo $projectId; ?>" 
+                                                    <a href="delete-review.php?id=<?php echo $rev['id']; ?>&project_id=<?php echo $projectId; ?>"
                                                        class="btn btn-sm btn-outline-danger" style="padding: 2px 6px; font-size: 0.7rem;"
                                                        onclick="return confirm('Delete this review?');">
                                                         <i class="bi bi-trash"></i>
@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (starContainer) {
         var labels = starContainer.querySelectorAll('label');
         var radios = starContainer.querySelectorAll('input[type="radio"]');
-        
+
         function highlightStars(count) {
             labels.forEach(function(label, idx) {
                 if (idx < count) {

@@ -1,10 +1,10 @@
 <?php
 /**
  * Header / Navbar — StudentHub
- * 
+ *
  * This file is included at the top of every page.
  * It outputs the HTML head and the navigation bar.
- * 
+ *
  * Before including this file, set:
  *   $pageTitle = "Page Title";  (optional)
  */
@@ -54,7 +54,7 @@ $currentPage = getCurrentPage();
         </a>
 
         <!-- Mobile Toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

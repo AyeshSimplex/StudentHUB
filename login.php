@@ -85,7 +85,7 @@ require_once 'includes/header.php';
             <form id="loginForm" method="POST" action="login.php" novalidate>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" 
+                    <input type="email" class="form-control" id="email" name="email"
                            value="<?php echo sanitize($oldEmail); ?>" placeholder="Enter your email" required>
                     <div class="form-error"></div>
                 </div>
@@ -98,7 +98,7 @@ require_once 'includes/header.php';
                         </a>
                     </div>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" name="password" 
+                        <input type="password" class="form-control" id="password" name="password"
                                placeholder="Enter your password" required>
                         <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password">
                             <i class="bi bi-eye"></i>

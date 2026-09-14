@@ -98,11 +98,11 @@ require_once 'includes/header.php';
             <?php endif; ?>
 
             <?php if (isLoggedIn() && $_SESSION['user_id'] == $profileId): ?>
-                <div class="mt-4">
-                    <a href="settings.php" class="btn btn-outline-accent btn-sm me-2">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4 w-100">
+                    <a href="settings.php" class="btn btn-outline-accent btn-sm d-inline-flex align-items-center justify-content-center">
                         <i class="bi bi-gear me-1"></i>Account Settings
                     </a>
-                    <a href="add-project.php" class="btn btn-accent btn-sm">
+                    <a href="add-project.php" class="btn btn-accent btn-sm d-inline-flex align-items-center justify-content-center">
                         <i class="bi bi-plus-lg me-1"></i>Add Project
                     </a>
                 </div>
@@ -110,7 +110,7 @@ require_once 'includes/header.php';
         </div>
 
         <!-- User's Projects -->
-        <div class="fade-in">
+        <div class="fade-in" id="projects">
             <h3 class="mb-4">
                 <i class="bi bi-grid me-2 accent-text"></i>
                 Projects by <?php echo sanitize($user['full_name']); ?>
@@ -124,7 +124,7 @@ require_once 'includes/header.php';
                         <div class="project-card fade-in delay-<?php echo min($pi, 6); ?>">
                             <?php if ($project['image'] && file_exists('uploads/projects/' . $project['image'])): ?>
                                 <div class="project-card-image">
-                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>" 
+                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>"
                                          alt="<?php echo sanitize($project['title']); ?>">
                                 </div>
                             <?php else: ?>

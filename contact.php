@@ -111,7 +111,9 @@ require_once 'includes/header.php';
                     <div class="public-message-notice">
                         <i class="bi bi-info-circle-fill"></i>
                         <div>
-                            <strong>Public Message Notice:</strong> Messages submitted here are publicly visible to other StudentHub users and may receive replies. Please do not include private or sensitive information such as passwords, phone numbers, or personal addresses.
+                            <strong>Public Message Notice:</strong> Messages submitted here are publicly visible to
+                            other StudentHub users and may receive replies. Please do not include private or sensitive
+                            information such as passwords, phone numbers, or personal addresses.
                         </div>
                     </div>
 
@@ -130,35 +132,45 @@ require_once 'includes/header.php';
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="contact_name" class="form-label">Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="contact_name" name="name" 
-                                           value="<?php echo sanitize($old['name']); ?>" required>
+                                    <label for="contact_name" class="form-label">Name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="contact_name" name="name"
+                                        value="<?php echo sanitize($old['name']); ?>" required>
                                     <div class="form-error">Please enter your name.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="contact_email" class="form-label">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="contact_email" name="email" 
-                                           value="<?php echo sanitize($old['email']); ?>" required>
+                                    <label for="contact_email" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="contact_email" name="email"
+                                        value="<?php echo sanitize($old['email']); ?>" required>
                                     <div class="form-error">Please enter a valid email.</div>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="contact_subject" class="form-label">Subject <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="contact_subject" name="subject" 
-                                   value="<?php echo sanitize($old['subject']); ?>" required>
+                            <label for="contact_subject" class="form-label">Subject <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="contact_subject" name="subject"
+                                value="<?php echo sanitize($old['subject']); ?>" required>
                             <div class="form-error">Please enter a subject.</div>
                         </div>
                         <div class="mb-3">
-                            <label for="contact_message" class="form-label">Message <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="contact_message" name="message" rows="5" required><?php echo sanitize($old['message']); ?></textarea>
+                            <label for="contact_message" class="form-label">Message <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="contact_message" name="message" rows="5"
+                                required><?php echo sanitize($old['message']); ?></textarea>
                             <div class="form-error">Message must be at least 10 characters.</div>
                         </div>
-                        <button type="submit" class="btn btn-accent w-100">
-                            <i class="bi bi-send me-2"></i>Send Message
-                        </button>
+                        <div class="d-grid gap-3 d-md-flex mt-1">
+                            <button type="submit" class="btn btn-accent flex-fill d-flex align-items-center justify-content-center">
+                                <i class="bi bi-send me-2"></i>Send Message
+                            </button>
+                            <a href="dashboard.php#public-messages" class="btn btn-outline-primary flex-fill d-flex align-items-center justify-content-center">
+                                <i class="bi bi-chat-square-text me-2"></i>View Public Messages
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -70,8 +70,8 @@ require_once 'includes/header.php';
     <div class="container">
 
         <!-- Welcome -->
-        <div class="dashboard-welcome fade-in d-flex flex-wrap justify-content-between align-items-center mb-4">
-            <div class="d-flex align-items-center gap-3">
+        <div class="dashboard-welcome fade-in d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+            <div class="d-flex align-items-center gap-3 flex-grow-1 flex-md-grow-0">
                 <div class="profile-avatar mb-0" style="width: 58px; height: 58px; font-size: 1.5rem; flex-shrink: 0;">
                     <?php if (!empty($user['profile_image']) && file_exists('uploads/avatars/' . $user['profile_image'])): ?>
                         <img src="uploads/avatars/<?php echo sanitize($user['profile_image']); ?>" alt="<?php echo sanitize($userName); ?>">
@@ -84,11 +84,11 @@ require_once 'includes/header.php';
                     <p class="mb-0 text-muted">Here's an overview of your StudentHub activity.</p>
                 </div>
             </div>
-            <div class="mt-3 mt-md-0">
-                <a href="settings.php" class="btn btn-outline-primary btn-sm me-2">
+            <div class="d-flex flex-wrap gap-2 w-100 w-md-auto mt-2 mt-md-0">
+                <a href="settings.php" class="btn btn-outline-primary btn-sm flex-fill d-inline-flex align-items-center justify-content-center">
                     <i class="bi bi-gear me-1"></i>Account Settings
                 </a>
-                <a href="add-project.php" class="btn btn-accent btn-sm">
+                <a href="add-project.php" class="btn btn-accent btn-sm flex-fill d-inline-flex align-items-center justify-content-center">
                     <i class="bi bi-plus-lg me-1"></i>Add Project
                 </a>
             </div>
@@ -97,48 +97,56 @@ require_once 'includes/header.php';
         <!-- Stats Cards -->
         <div class="row g-4 mb-5">
             <div class="col-6 col-md-3">
-                <div class="dashboard-stat-card fade-in delay-1">
-                    <div class="dashboard-stat-icon">
-                        <i class="bi bi-folder"></i>
+                <a href="#my-projects" class="text-decoration-none">
+                    <div class="dashboard-stat-card fade-in delay-1" style="cursor: pointer;">
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-folder"></i>
+                        </div>
+                        <div class="dashboard-stat-number"><?php echo $projectCount; ?></div>
+                        <div class="dashboard-stat-label">My Projects</div>
                     </div>
-                    <div class="dashboard-stat-number"><?php echo $projectCount; ?></div>
-                    <div class="dashboard-stat-label">My Projects</div>
-                </div>
+                </a>
             </div>
             <div class="col-6 col-md-3">
-                <div class="dashboard-stat-card fade-in delay-2">
-                    <div class="dashboard-stat-icon" style="background: rgba(247,201,72,0.12); color: #f7c948;">
-                        <i class="bi bi-check-circle"></i>
+                <a href="profile.php#projects" class="text-decoration-none">
+                    <div class="dashboard-stat-card fade-in delay-2" style="cursor: pointer;">
+                        <div class="dashboard-stat-icon" style="background: rgba(247,201,72,0.12); color: #f7c948;">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div class="dashboard-stat-number"><?php echo $projectCount; ?></div>
+                        <div class="dashboard-stat-label">Published</div>
                     </div>
-                    <div class="dashboard-stat-number"><?php echo $projectCount; ?></div>
-                    <div class="dashboard-stat-label">Published</div>
-                </div>
+                </a>
             </div>
             <div class="col-6 col-md-3">
-                <div class="dashboard-stat-card fade-in delay-3">
-                    <div class="dashboard-stat-icon" style="background: rgba(124,77,255,0.1); color: #7c4dff;">
-                        <i class="bi bi-lightning"></i>
+                <a href="settings.php?tab=profile" class="text-decoration-none">
+                    <div class="dashboard-stat-card fade-in delay-3" style="cursor: pointer;">
+                        <div class="dashboard-stat-icon" style="background: rgba(124,77,255,0.1); color: #7c4dff;">
+                            <i class="bi bi-lightning"></i>
+                        </div>
+                        <div class="dashboard-stat-number"><?php echo $skillCount; ?></div>
+                        <div class="dashboard-stat-label">Skills</div>
                     </div>
-                    <div class="dashboard-stat-number"><?php echo $skillCount; ?></div>
-                    <div class="dashboard-stat-label">Skills</div>
-                </div>
+                </a>
             </div>
             <div class="col-6 col-md-3">
-                <div class="dashboard-stat-card fade-in delay-4">
-                    <div class="dashboard-stat-icon" style="background: rgba(0, 188, 212, 0.12); color: var(--accent);">
-                        <i class="bi bi-envelope"></i>
+                <a href="#public-messages" class="text-decoration-none">
+                    <div class="dashboard-stat-card fade-in delay-4" style="cursor: pointer;">
+                        <div class="dashboard-stat-icon" style="background: rgba(0, 188, 212, 0.12); color: var(--accent);">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="dashboard-stat-number"><?php echo $messageCount; ?></div>
+                        <div class="dashboard-stat-label">Inquiries</div>
                     </div>
-                    <div class="dashboard-stat-number"><?php echo $messageCount; ?></div>
-                    <div class="dashboard-stat-label">Inquiries</div>
-                </div>
+                </a>
             </div>
         </div>
 
         <!-- My Projects Table -->
-        <div class="dashboard-table-card fade-in">
+        <div class="dashboard-table-card fade-in" id="my-projects">
             <div class="dashboard-table-header">
                 <h4><i class="bi bi-folder2-open me-2 accent-text"></i>My Projects</h4>
-                <a href="add-project.php" class="btn btn-accent btn-sm">
+                <a href="add-project.php" class="btn btn-accent btn-sm d-inline-flex align-items-center justify-content-center">
                     <i class="bi bi-plus-lg me-1"></i>Add New Project
                 </a>
             </div>
@@ -193,13 +201,13 @@ require_once 'includes/header.php';
         </div>
 
         <!-- Contact Messages Card -->
-        <div class="dashboard-table-card fade-in mt-4">
+        <div class="dashboard-table-card fade-in mt-4" id="public-messages">
             <div class="dashboard-table-header">
                 <div>
                     <h4><i class="bi bi-envelope-paper me-2 accent-text"></i>Public Messages</h4>
                     <small class="text-muted">Messages submitted through the Contact page</small>
                 </div>
-                <a href="contact.php" class="btn btn-outline-accent btn-sm">
+                <a href="contact.php" class="btn btn-outline-accent btn-sm d-inline-flex align-items-center justify-content-center">
                     <i class="bi bi-send me-1"></i>Contact Page
                 </a>
             </div>
@@ -231,7 +239,7 @@ require_once 'includes/header.php';
                             <div class="message-actions">
                                 <!-- Reply button for any logged-in user -->
                                 <?php if (isLoggedIn()): ?>
-                                    <button type="button" class="btn btn-sm btn-accent reply-toggle-btn" 
+                                    <button type="button" class="btn btn-sm btn-accent reply-toggle-btn"
                                             onclick="toggleReplyForm(<?php echo $msg['id']; ?>)">
                                         <i class="bi bi-reply-fill me-1"></i>Reply
                                     </button>
@@ -239,7 +247,7 @@ require_once 'includes/header.php';
 
                                 <!-- Edit button - only for own messages -->
                                 <?php if (isset($msg['user_id']) && $msg['user_id'] == $userId): ?>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" 
+                                    <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick="toggleEditForm(<?php echo $msg['id']; ?>)">
                                         <i class="bi bi-pencil me-1"></i>Edit
                                     </button>
@@ -247,10 +255,10 @@ require_once 'includes/header.php';
 
                                 <!-- Delete button - own messages OR admin -->
                                 <?php if ((isset($msg['user_id']) && $msg['user_id'] == $userId) || $adminCheck): ?>
-                                    <a href="delete-message.php?id=<?php echo $msg['id']; ?>" 
-                                       class="btn btn-sm btn-outline-danger delete-msg-btn"
+                                    <a href="delete-message.php?id=<?php echo $msg['id']; ?>"
+                                       class="btn btn-sm btn-outline-danger delete-msg-btn d-inline-flex align-items-center justify-content-center"
                                        onclick="return confirm('Are you sure you want to delete this message?');">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash m-0"></i>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -261,18 +269,18 @@ require_once 'includes/header.php';
                                     <form method="POST" action="edit-message.php">
                                         <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                         <div class="mb-2">
-                                            <input type="text" name="subject" class="form-control form-control-sm" 
+                                            <input type="text" name="subject" class="form-control form-control-sm"
                                                    value="<?php echo sanitize($msg['subject']); ?>" placeholder="Subject" required>
                                         </div>
                                         <div class="mb-2">
-                                            <textarea name="message" class="form-control form-control-sm" rows="3" 
+                                            <textarea name="message" class="form-control form-control-sm" rows="3"
                                                       placeholder="Message" required><?php echo sanitize($msg['message']); ?></textarea>
                                         </div>
                                         <div class="d-flex gap-2">
                                             <button type="submit" class="btn btn-sm btn-accent">
                                                 <i class="bi bi-check-lg me-1"></i>Save
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"
                                                     onclick="toggleEditForm(<?php echo $msg['id']; ?>)">Cancel</button>
                                         </div>
                                     </form>
@@ -285,7 +293,7 @@ require_once 'includes/header.php';
                                     <form method="POST" action="reply-message.php">
                                         <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                         <div class="d-flex gap-2 align-items-start">
-                                            <textarea name="reply_text" class="form-control form-control-sm" rows="2" 
+                                            <textarea name="reply_text" class="form-control form-control-sm" rows="2"
                                                       placeholder="Write your reply..." required></textarea>
                                             <button type="submit" class="btn btn-sm btn-accent" style="white-space: nowrap;">
                                                 <i class="bi bi-send me-1"></i>Send
@@ -300,18 +308,18 @@ require_once 'includes/header.php';
                                 <div class="message-replies">
                                     <div class="replies-header">
                                         <i class="bi bi-chat-left-text me-1"></i>
-                                        <?php echo count($allReplies[$msg['id']]); ?> 
+                                        <?php echo count($allReplies[$msg['id']]); ?>
                                         Repl<?php echo count($allReplies[$msg['id']]) === 1 ? 'y' : 'ies'; ?>
                                     </div>
                                     <?php foreach ($allReplies[$msg['id']] as $reply): ?>
                                         <div class="reply-item">
                                             <div class="reply-header">
                                                 <div class="reply-avatar">
-                                                    <?php 
+                                                    <?php
                                                     // Admin replies show as StudentHub Team
                                                     $isReplyAdmin = ($reply['user_id'] == 1 || $reply['username'] === 'ayesh');
                                                     $replyDisplayName = $isReplyAdmin ? 'StudentHub Team' : $reply['full_name'];
-                                                    echo strtoupper(substr($replyDisplayName, 0, 1)); 
+                                                    echo strtoupper(substr($replyDisplayName, 0, 1));
                                                     ?>
                                                 </div>
                                                 <strong>
@@ -323,9 +331,9 @@ require_once 'includes/header.php';
                                                 <div class="d-flex align-items-center gap-2 ms-auto">
                                                     <span class="text-muted small"><?php echo getTimeAgo($reply['created_at']); ?></span>
                                                     <?php if ($_SESSION['user_id'] == $reply['user_id'] || isAdmin()): ?>
-                                                        <a href="delete-reply.php?id=<?php echo $reply['id']; ?>" 
-                                                           class="btn btn-sm btn-outline-danger border-0" 
-                                                           style="padding: 2px 6px; font-size: 0.75rem;" 
+                                                        <a href="delete-reply.php?id=<?php echo $reply['id']; ?>"
+                                                           class="btn btn-sm btn-outline-danger border-0"
+                                                           style="padding: 2px 6px; font-size: 0.75rem;"
                                                            onclick="return confirm('Delete this reply?');"
                                                            title="Delete Reply">
                                                             <i class="bi bi-trash"></i>

@@ -2,7 +2,7 @@
 /**
  * Mailer Helper — StudentHub
  * Handles sending password reset emails.
- * 
+ *
  * Supports:
  * 1. Standard PHP mail()
  * 2. Pure PHP SMTP Socket client (e.g. Gmail SMTP with App Password)
@@ -144,7 +144,7 @@ function logMailDispatch($recipient, $senderName, $senderEmail, $subject, $metho
 
 /**
  * Send Password Reset Link Email
- * 
+ *
  * @param string $name User's name
  * @param string $email User's email
  * @param string $resetLink The generated password reset URL
@@ -152,7 +152,7 @@ function logMailDispatch($recipient, $senderName, $senderEmail, $subject, $metho
  */
 function sendPasswordResetEmail($name, $email, $resetLink) {
     $mailSubject = "Reset Your StudentHub Password";
-    
+
     $htmlBody = "
     <!DOCTYPE html>
     <html lang='en'>
@@ -181,7 +181,7 @@ function sendPasswordResetEmail($name, $email, $resetLink) {
                 <div class='badge-notice'>Password Reset Request</div>
                 <h3 style='margin-top: 0; color: #0d1b2a;'>Hello " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . ",</h3>
                 <p>We received a request to reset your password for your StudentHub account. Click the button below to choose a new password:</p>
-                
+
                 <div style='text-align: center;'>
                     <a href='" . htmlspecialchars($resetLink, ENT_QUOTES, 'UTF-8') . "' class='btn-reset'>
                         Reset My Password

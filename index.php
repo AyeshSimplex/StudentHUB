@@ -174,7 +174,7 @@ $totalProjects = $conn->query("SELECT COUNT(*) as c FROM projects")->fetch_assoc
                             <!-- Project Image -->
                             <?php if ($project['image'] && file_exists('uploads/projects/' . $project['image'])): ?>
                                 <div class="project-card-image">
-                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>" 
+                                    <img src="uploads/projects/<?php echo sanitize($project['image']); ?>"
                                          alt="<?php echo sanitize($project['title']); ?>">
                                 </div>
                             <?php else: ?>
@@ -293,42 +293,51 @@ $totalProjects = $conn->query("SELECT COUNT(*) as c FROM projects")->fetch_assoc
             <h2 class="section-title fade-in">Why StudentHub?</h2>
             <p class="section-subtitle fade-in">Everything you need to build your digital portfolio</p>
         </div>
+        <?php $featureLink = isLoggedIn() ? 'add-project.php' : 'login.php'; ?>
         <div class="row g-4">
             <div class="col-lg-3 col-md-6">
-                <div class="feature-card fade-in delay-1">
-                    <div class="feature-icon">
-                        <i class="bi bi-trophy"></i>
+                <a href="<?php echo $featureLink; ?>" class="text-decoration-none d-block">
+                    <div class="feature-card fade-in delay-1" style="cursor: pointer;">
+                        <div class="feature-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+                        <h5 class="feature-title text-dark">Showcase</h5>
+                        <p class="feature-desc text-muted">Present your academic and technical projects to a wider audience.</p>
                     </div>
-                    <h5 class="feature-title">Showcase</h5>
-                    <p class="feature-desc">Present your academic and technical projects to a wider audience.</p>
-                </div>
+                </a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="feature-card fade-in delay-2">
-                    <div class="feature-icon">
-                        <i class="bi bi-search"></i>
+                <a href="<?php echo $featureLink; ?>" class="text-decoration-none d-block">
+                    <div class="feature-card fade-in delay-2" style="cursor: pointer;">
+                        <div class="feature-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h5 class="feature-title text-dark">Discover</h5>
+                        <p class="feature-desc text-muted">Explore ideas created by fellow students across different disciplines.</p>
                     </div>
-                    <h5 class="feature-title">Discover</h5>
-                    <p class="feature-desc">Explore ideas created by fellow students across different disciplines.</p>
-                </div>
+                </a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="feature-card fade-in delay-3">
-                    <div class="feature-icon">
-                        <i class="bi bi-people"></i>
+                <a href="<?php echo $featureLink; ?>" class="text-decoration-none d-block">
+                    <div class="feature-card fade-in delay-3" style="cursor: pointer;">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h5 class="feature-title text-dark">Connect</h5>
+                        <p class="feature-desc text-muted">Find students with similar interests and collaborate on new ideas.</p>
                     </div>
-                    <h5 class="feature-title">Connect</h5>
-                    <p class="feature-desc">Find students with similar interests and collaborate on new ideas.</p>
-                </div>
+                </a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="feature-card fade-in delay-4">
-                    <div class="feature-icon">
-                        <i class="bi bi-file-earmark-person"></i>
+                <a href="<?php echo $featureLink; ?>" class="text-decoration-none d-block">
+                    <div class="feature-card fade-in delay-4" style="cursor: pointer;">
+                        <div class="feature-icon">
+                            <i class="bi bi-file-earmark-person"></i>
+                        </div>
+                        <h5 class="feature-title text-dark">Build Your Portfolio</h5>
+                        <p class="feature-desc text-muted">Create a professional digital profile to share with future employers.</p>
                     </div>
-                    <h5 class="feature-title">Build Your Portfolio</h5>
-                    <p class="feature-desc">Create a professional digital profile to share with future employers.</p>
-                </div>
+                </a>
             </div>
         </div>
     </div>
