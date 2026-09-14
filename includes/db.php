@@ -24,6 +24,9 @@ define('DB_NAME', 'studenthub');   // Database name
 // Create connection
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
+// Set MySQL timezone to Sri Lanka (+05:30)
+$conn->query("SET time_zone = '+05:30'");
+
 // Check connection
 if ($conn->connect_error) {
     die('<div style="text-align:center;padding:50px;font-family:sans-serif;">
