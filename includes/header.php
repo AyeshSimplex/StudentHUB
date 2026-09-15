@@ -35,21 +35,31 @@ $currentPage = getCurrentPage();
 
     <title><?php echo sanitize($pageTitle); ?> — StudentHub</title>
 
+    <!-- Standard SEO -->
+    <meta name="title" content="<?php echo isset($ogTitle) ? sanitize($ogTitle) : sanitize($pageTitle) . ' — StudentHub'; ?>">
+
     <!-- Open Graph / Link Previews -->
+    <meta property="og:site_name" content="StudentHub">
     <?php if (isset($ogTitle)): ?>
         <meta property="og:title" content="<?php echo sanitize($ogTitle); ?>">
+        <meta name="twitter:title" content="<?php echo sanitize($ogTitle); ?>">
     <?php else: ?>
         <meta property="og:title" content="<?php echo sanitize($pageTitle); ?> — StudentHub">
+        <meta name="twitter:title" content="<?php echo sanitize($pageTitle); ?> — StudentHub">
     <?php endif; ?>
     
     <?php if (isset($ogDescription)): ?>
         <meta property="og:description" content="<?php echo sanitize($ogDescription); ?>">
+        <meta name="twitter:description" content="<?php echo sanitize($ogDescription); ?>">
     <?php else: ?>
         <meta property="og:description" content="StudentHub - Showcase Your Skills. Share Your Projects. Build Your Future.">
+        <meta name="twitter:description" content="StudentHub - Showcase Your Skills. Share Your Projects. Build Your Future.">
     <?php endif; ?>
 
     <?php if (isset($ogImage)): ?>
         <meta property="og:image" content="<?php echo sanitize($ogImage); ?>">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:image" content="<?php echo sanitize($ogImage); ?>">
     <?php endif; ?>
