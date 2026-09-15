@@ -26,8 +26,38 @@ $currentPage = getCurrentPage();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="StudentHub - Showcase Your Skills. Share Your Projects. Build Your Future. A platform for university students.">
+    
+    <?php if (isset($ogDescription)): ?>
+        <meta name="description" content="<?php echo sanitize($ogDescription); ?>">
+    <?php else: ?>
+        <meta name="description" content="StudentHub - Showcase Your Skills. Share Your Projects. Build Your Future. A platform for university students.">
+    <?php endif; ?>
+
     <title><?php echo sanitize($pageTitle); ?> — StudentHub</title>
+
+    <!-- Open Graph / Link Previews -->
+    <?php if (isset($ogTitle)): ?>
+        <meta property="og:title" content="<?php echo sanitize($ogTitle); ?>">
+    <?php else: ?>
+        <meta property="og:title" content="<?php echo sanitize($pageTitle); ?> — StudentHub">
+    <?php endif; ?>
+    
+    <?php if (isset($ogDescription)): ?>
+        <meta property="og:description" content="<?php echo sanitize($ogDescription); ?>">
+    <?php else: ?>
+        <meta property="og:description" content="StudentHub - Showcase Your Skills. Share Your Projects. Build Your Future.">
+    <?php endif; ?>
+
+    <?php if (isset($ogImage)): ?>
+        <meta property="og:image" content="<?php echo sanitize($ogImage); ?>">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="<?php echo sanitize($ogImage); ?>">
+    <?php endif; ?>
+
+    <?php if (isset($ogUrl)): ?>
+        <meta property="og:url" content="<?php echo sanitize($ogUrl); ?>">
+    <?php endif; ?>
+    <meta property="og:type" content="website">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

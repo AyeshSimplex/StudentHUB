@@ -89,6 +89,19 @@ if ($currentUserId) {
 }
 
 $pageTitle = $project['title'];
+
+// Set Open Graph variables for link previews (WhatsApp, FB, Discord, etc.)
+$ogTitle = $project['title'];
+$ogDescription = substr(strip_tags($project['description']), 0, 150) . (strlen($project['description']) > 150 ? '...' : '');
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+$ogUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+if (!empty($allImages)) {
+    // Generate an absolute URL for the image
+    $baseDir = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $ogImage = $protocol . "://" . $_SERVER['HTTP_HOST'] . $baseDir . '/uploads/projects/' . $allImages[0]['image'];
+}
+
 require_once 'includes/header.php';
 ?>
 
@@ -270,7 +283,7 @@ require_once 'includes/header.php';
                                 <i class="bi bi-code-slash"></i>
                                 <div>
                                     <div class="detail-meta-label">Technologies</div>
-                                    <div class="detail-meta-value">
+                                    <div class="detail-meta-value d-flex flex-wrap gap-2 mt-1">
                                         <?php
                                         $techs = explode(',', $project['technologies']);
                                         foreach ($techs as $tech): ?>
@@ -286,7 +299,7 @@ require_once 'includes/header.php';
                                 <i class="bi bi-lightbulb"></i>
                                 <div>
                                     <div class="detail-meta-label">Skills</div>
-                                    <div class="detail-meta-value">
+                                    <div class="detail-meta-value d-flex flex-wrap gap-2 mt-1">
                                         <?php
                                         $skills = explode(',', $project['skills']);
                                         foreach ($skills as $skill): ?>
@@ -318,19 +331,19 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <!-- Links -->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="d-flex flex-column flex-md-row gap-2 mb-4">
                         <?php if ($project['project_url']): ?>
-                            <a href="<?php echo sanitize($project['project_url']); ?>" target="_blank" class="btn btn-accent">
+                            <a href="<?php echo sanitize($project['project_url']); ?>" target="_blank" class="btn btn-accent text-nowrap">
                                 <i class="bi bi-globe me-2"></i>View Live Demo
                             </a>
                         <?php endif; ?>
                         <?php if ($project['github_url']): ?>
-                            <a href="<?php echo sanitize($project['github_url']); ?>" target="_blank" class="btn btn-outline-accent">
+                            <a href="<?php echo sanitize($project['github_url']); ?>" target="_blank" class="btn btn-outline-accent text-nowrap">
                                 <i class="bi bi-github me-2"></i>View on GitHub
                             </a>
                         <?php endif; ?>
                         <!-- Share Button -->
-                        <button type="button" class="btn btn-outline-accent" onclick="shareProject()" id="shareBtn">
+                        <button type="button" class="btn btn-outline-accent text-nowrap" onclick="shareProject()" id="shareBtn">
                             <i class="bi bi-share me-2"></i>Share
                         </button>
                     </div>

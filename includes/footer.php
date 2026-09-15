@@ -43,7 +43,6 @@
                 <ul class="footer-links footer-contact">
                     <li><i class="bi bi-geo-alt me-2"></i>Rajarata University of Sri Lanka</li>
                     <li><i class="bi bi-building me-2"></i>Faculty of Technology</li>
-                    <li><i class="bi bi-envelope me-2"></i><a href="mailto:ent2023048@tec.rjt.ac.lk" class="text-reset">ent2023048@tec.rjt.ac.lk</a></li>
                 </ul>
             </div>
         </div>

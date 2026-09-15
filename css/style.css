@@ -186,6 +186,17 @@ img {
     box-shadow: 0 6px 20px rgba(13, 27, 42, 0.3);
 }
 
+.btn-accent.btn-sm, 
+.btn-outline-accent.btn-sm, 
+.btn-primary-custom.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* ===================================
    Navbar
    =================================== */
