@@ -53,6 +53,7 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **Public Profiles:** Public student portfolios highlighting biographical data, faculty, skills badges, and all published projects.
 - **Reviews & Star Ratings (NEW):** Interactive 5-star rating and review system on project pages with automatic average calculation and user-managed reviews.
 - **Project Sharing (NEW):** Native Web Share API integration for seamless mobile/desktop sharing, with a clipboard fallback. Includes Open Graph (OG) and Twitter Card meta tags for rich link previews (image, title, description) when sharing URLs on social media platforms like WhatsApp, Facebook, and Discord.
+- **PWA & SEO Optimized (NEW):** Includes a Web Manifest (`site.webmanifest`), Apple Touch icons, and modern Favicons, allowing the platform to be installed as a Progressive Web App (PWA) on mobile devices with a native app-like experience.
 - **Responsive UI Enhancements:** Optimized action buttons (View, Edit, Share, GitHub) with intelligent flexbox layouts for perfect alignment and wrapping behavior across mobile and desktop screens.
 - **Clickable Project Cards:** Enhanced UX allowing users to click anywhere on a project gig card to view details, while keeping sub-actions (like 'Edit') functional.
 - **Contact Form & Public Notice:** Inquiries submitted via the contact form are stored in the database. Features a public visibility warning and no longer dispatches internal emails for privacy.
