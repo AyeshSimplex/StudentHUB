@@ -92,8 +92,9 @@ $pageTitle = $project['title'];
 
 // Set Open Graph variables for link previews (WhatsApp, FB, Discord, etc.)
 $ogTitle = $project['title'];
-$ogDescription = substr(strip_tags($project['description']), 0, 150) . (strlen($project['description']) > 150 ? '...' : '');
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+$cleanDescription = strip_tags($project['description']);
+$ogDescription = mb_strlen($cleanDescription) > 150 ? mb_substr($cleanDescription, 0, 150) . '...' : $cleanDescription;
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? "https" : "http";
 $ogUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 if (!empty($allImages)) {
