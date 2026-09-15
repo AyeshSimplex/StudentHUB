@@ -39,6 +39,18 @@ $currentPage = getCurrentPage();
     <meta name="title" content="<?php echo isset($ogTitle) ? sanitize($ogTitle) : sanitize($pageTitle) . ' — StudentHub'; ?>">
 
     <!-- Open Graph / Link Previews -->
+    <?php
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+        $currentUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        
+        // Calculate dynamic base URL to handle both localhost (/StudentHUB) and live domain (/)
+        $dirPath = dirname($_SERVER['PHP_SELF']);
+        $dirPath = str_replace('\\', '/', $dirPath); // Windows compatibility
+        if ($dirPath === '/' || $dirPath === '\\') {
+            $dirPath = '';
+        }
+        $baseUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $dirPath;
+    ?>
     <meta property="og:site_name" content="StudentHub">
     <?php if (isset($ogTitle)): ?>
         <meta property="og:title" content="<?php echo sanitize($ogTitle); ?>">
@@ -60,14 +72,28 @@ $currentPage = getCurrentPage();
         <meta property="og:image" content="<?php echo sanitize($ogImage); ?>">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
-        <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:image" content="<?php echo sanitize($ogImage); ?>">
+    <?php else: ?>
+        <!-- Default Fallback Image -->
+        <meta property="og:image" content="<?php echo $baseUrl; ?>/images/og-cover.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:image" content="<?php echo $baseUrl; ?>/images/og-cover.jpg">
     <?php endif; ?>
+    <meta name="twitter:card" content="summary_large_image">
 
-    <?php if (isset($ogUrl)): ?>
-        <meta property="og:url" content="<?php echo sanitize($ogUrl); ?>">
-    <?php endif; ?>
+    <meta property="og:url" content="<?php echo isset($ogUrl) ? sanitize($ogUrl) : $currentUrl; ?>">
+    <meta name="twitter:url" content="<?php echo isset($ogUrl) ? sanitize($ogUrl) : $currentUrl; ?>">
     <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo isset($ogUrl) ? sanitize($ogUrl) : $currentUrl; ?>">
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/x-icon" href="<?php echo $baseUrl; ?>/images/icon.jpg">
+    <link rel="apple-touch-icon" href="<?php echo $baseUrl; ?>/images/icon.jpg">
+    <meta name="msapplication-TileImage" content="<?php echo $baseUrl; ?>/images/icon.jpg">
+    <link rel="manifest" href="<?php echo $baseUrl; ?>/site.webmanifest">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
