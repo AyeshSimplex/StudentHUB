@@ -84,14 +84,6 @@ require_once 'includes/header.php';
                     <p class="mb-0 text-muted">Here's an overview of your StudentHub activity.</p>
                 </div>
             </div>
-            <div class="d-flex flex-wrap gap-2 w-100 w-md-auto mt-2 mt-md-0">
-                <a href="settings.php" class="btn btn-outline-primary btn-sm flex-fill d-inline-flex align-items-center justify-content-center">
-                    <i class="bi bi-gear me-1"></i>Account Settings
-                </a>
-                <a href="add-project.php" class="btn btn-accent btn-sm flex-fill d-inline-flex align-items-center justify-content-center">
-                    <i class="bi bi-plus-lg me-1"></i>Add Project
-                </a>
-            </div>
         </div>
 
         <!-- Stats Cards -->
