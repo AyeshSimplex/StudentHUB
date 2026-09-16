@@ -107,13 +107,11 @@ require_once 'includes/header.php';
                 <div class="contact-form-card">
                     <h3><i class="bi bi-send me-2 accent-text"></i>Send a Message</h3>
 
-                    <!-- Public Message Notice -->
-                    <div class="public-message-notice">
-                        <i class="bi bi-info-circle-fill"></i>
+                    <!-- Private Message Notice -->
+                    <div class="public-message-notice" style="background: rgba(0, 255, 136, 0.1); border-left-color: var(--accent);">
+                        <i class="bi bi-shield-lock-fill" style="color: var(--accent);"></i>
                         <div>
-                            <strong>Public Message Notice:</strong> Messages submitted here are publicly visible to
-                            other StudentHub users and may receive replies. Please do not include private or sensitive
-                            information such as passwords, phone numbers, or personal addresses.
+                            <strong>Privacy Assured:</strong> Your messages are sent directly to the StudentHub administrative team and are not visible to the public.
                         </div>
                     </div>
 
