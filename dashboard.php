@@ -55,7 +55,7 @@ if ($adminCheck) {
 
 // Get replies for messages
 $allReplies = [];
-$repliesResult = $conn->query("SELECT r.*, u.full_name, u.username FROM message_replies r JOIN users u ON r.user_id = u.id ORDER BY r.created_at ASC");
+$repliesResult = $conn->query("SELECT r.*, u.full_name, u.username, u.is_admin FROM message_replies r JOIN users u ON r.user_id = u.id ORDER BY r.created_at ASC");
 if ($repliesResult) {
     while ($reply = $repliesResult->fetch_assoc()) {
         $allReplies[$reply['message_id']][] = $reply;
@@ -318,7 +318,7 @@ require_once 'includes/header.php';
                                                 <div class="reply-avatar">
                                                     <?php
                                                     // Admin replies show as StudentHub Team
-                                                    $isReplyAdmin = ($reply['user_id'] == 1 || $reply['username'] === 'ayesh');
+                                                    $isReplyAdmin = (isset($reply['is_admin']) && $reply['is_admin'] == 1);
                                                     $replyDisplayName = $isReplyAdmin ? 'StudentHub Team' : $reply['full_name'];
                                                     echo strtoupper(substr($replyDisplayName, 0, 1));
                                                     ?>
