@@ -40,8 +40,18 @@ $msgCountStmt->execute();
 $messageCount = $msgCountStmt->get_result()->fetch_assoc()['count'];
 $msgCountStmt->close();
 
-// Get recent contact messages (all messages for display)
-$recentMessages = $conn->query("SELECT m.*, u.username as sender_username FROM messages m LEFT JOIN users u ON m.user_id = u.id ORDER BY m.created_at DESC LIMIT 10");
+$adminCheck = isAdmin();
+
+// Get recent contact messages (Admins see all, users see their own)
+if ($adminCheck) {
+    $recentMessages = $conn->query("SELECT m.*, u.username as sender_username FROM messages m LEFT JOIN users u ON m.user_id = u.id ORDER BY m.created_at DESC LIMIT 10");
+} else {
+    $stmt = $conn->prepare("SELECT m.*, u.username as sender_username FROM messages m LEFT JOIN users u ON m.user_id = u.id WHERE m.user_id = ? ORDER BY m.created_at DESC LIMIT 10");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $recentMessages = $stmt->get_result();
+    $stmt->close();
+}
 
 // Get replies for messages
 $allReplies = [];
@@ -52,7 +62,6 @@ if ($repliesResult) {
     }
 }
 
-$adminCheck = isAdmin();
 
 require_once 'includes/header.php';
 ?>

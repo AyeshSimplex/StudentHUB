@@ -56,13 +56,13 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **PWA & SEO Optimized (NEW):** Includes a Web Manifest (`site.webmanifest`), Apple Touch icons, and modern Favicons, allowing the platform to be installed as a Progressive Web App (PWA) on mobile devices with a native app-like experience.
 - **Responsive UI Enhancements:** Optimized action buttons (View, Edit, Share, GitHub) with intelligent flexbox layouts for perfect alignment and wrapping behavior across mobile and desktop screens.
 - **Clickable Project Cards:** Enhanced UX allowing users to click anywhere on a project gig card to view details, while keeping sub-actions (like 'Edit') functional.
-- **Contact Form & Public Notice:** Inquiries submitted via the contact form are stored in the database. Features a public visibility warning and no longer dispatches internal emails for privacy.
-- **Dashboard Message Management (NEW):** Students and Admins can view, edit, reply, or delete their own messages and replies directly from the dashboard. Admin replies appear as 'StudentHub Team'.
+- **Contact Form:** Inquiries submitted via the contact form are securely stored in the database.
+- **Dashboard Message Management (NEW):** Students and Admins can view, edit, reply, or delete messages directly from the dashboard. Normal users can only see their own submitted messages, while Administrators have access to all inquiries. Admin replies appear as 'StudentHub Team'.
 - **User Dashboard Metrics (NEW):** The inquiries counter accurately reflects only the current user's submitted messages for better privacy.
 
 ### 👑 Admin Capabilities (Moderation)
-- **Privacy Access:** While the "Public Messages" section is visible to all logged-in users, only Administrators can see the private email addresses of the users who submitted inquiries.
-- **Message Moderation:** Privileges to delete any public message or reply submitted by any user across the platform.
+- **Privacy Access:** Administrators have full access to view all submitted inquiries and the private email addresses of the users who submitted them.
+- **Message Moderation:** Privileges to delete any message or reply submitted by any user across the platform.
 - **Review Moderation:** Ability to remove any project review or rating to maintain community standards, even if they are not the author.
 - **Official Responses:** Replies submitted by an administrator to any user inquiry are represented officially as 'StudentHub Team'.
 - **Admin Assignment:** The admin role is securely managed via an `is_admin` database column (Role-Based Access Control). Registration with reserved administrative emails or usernames is strictly blocked to prevent privilege escalation.
