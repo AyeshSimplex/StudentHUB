@@ -58,7 +58,7 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **Clickable Project Cards:** Enhanced UX allowing users to click anywhere on a project gig card to view details, while keeping sub-actions (like 'Edit') functional.
 - **Contact Form:** Inquiries submitted via the contact form are securely stored in the database.
 - **Dashboard Message Management (NEW):** Students and Admins can view, edit, reply, or delete messages directly from the dashboard. Normal users can only see their own submitted messages, while Administrators have access to all inquiries. Admin replies appear as 'StudentHub Team'.
-- **User Dashboard Metrics (NEW):** The inquiries counter accurately reflects only the current user's submitted messages for better privacy.
+- **User Dashboard Metrics (NEW):** The inquiries counter accurately reflects only the current user's submitted messages for normal users, while Administrators see the total count of all inquiries across the platform.
 
 ### 👑 Admin Capabilities (Moderation)
 - **Privacy Access:** Administrators have full access to view all submitted inquiries and the private email addresses of the users who submitted them.

@@ -33,14 +33,18 @@ $skillCount = count(array_filter($skillsArray));
 ensureMessagesUserIdColumn($conn);
 ensureMessageRepliesTable($conn);
 
-// Get inquiries count - only current user's messages
-$msgCountStmt = $conn->prepare("SELECT COUNT(*) as count FROM messages WHERE user_id = ?");
-$msgCountStmt->bind_param("i", $userId);
-$msgCountStmt->execute();
-$messageCount = $msgCountStmt->get_result()->fetch_assoc()['count'];
-$msgCountStmt->close();
-
 $adminCheck = isAdmin();
+
+// Get inquiries count (Admins see total count, users see their own count)
+if ($adminCheck) {
+    $messageCount = $conn->query("SELECT COUNT(*) as count FROM messages")->fetch_assoc()['count'];
+} else {
+    $msgCountStmt = $conn->prepare("SELECT COUNT(*) as count FROM messages WHERE user_id = ?");
+    $msgCountStmt->bind_param("i", $userId);
+    $msgCountStmt->execute();
+    $messageCount = $msgCountStmt->get_result()->fetch_assoc()['count'];
+    $msgCountStmt->close();
+}
 
 // Get recent contact messages (Admins see all, users see their own)
 if ($adminCheck) {
