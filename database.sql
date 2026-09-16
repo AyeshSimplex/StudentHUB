@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `profile_image` VARCHAR(255) DEFAULT NULL,
     `reset_token` VARCHAR(64) DEFAULT NULL,
     `reset_token_expires` DATETIME DEFAULT NULL,
+    `is_admin` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -102,10 +103,10 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 -- Email: demo@studenthub.lk
 -- Password: Demo@123
 -- ============================================
-INSERT INTO `users` (`username`, `full_name`, `email`, `password`, `faculty`, `skills`) VALUES
-('ayesh', 'Ayesh Rathnayaka', 'demo@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Technology', 'PHP, MySQL, JavaScript, HTML, CSS, Python, Arduino, IoT'),
-('nimasha', 'Nimasha Fernando', 'nimasha@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Technology', 'Python, Machine Learning, Data Analysis, IoT, Electronics'),
-('tharindu', 'Tharindu Silva', 'tharindu@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Applied Sciences', 'Materials Science, Polymer Chemistry, Lab Analysis, Research Writing');
+INSERT INTO `users` (`username`, `full_name`, `email`, `password`, `faculty`, `skills`, `is_admin`) VALUES
+('ayesh', 'Ayesh Rathnayaka', 'demo@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Technology', 'PHP, MySQL, JavaScript, HTML, CSS, Python, Arduino, IoT', 1),
+('nimasha', 'Nimasha Fernando', 'nimasha@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Technology', 'Python, Machine Learning, Data Analysis, IoT, Electronics', 0),
+('tharindu', 'Tharindu Silva', 'tharindu@studenthub.lk', '$2y$10$Z5qUkQc3su9hZwncCJMzCebYq/SG6n4Rka29z1WqaQc5.5dovyMWG', 'Faculty of Applied Sciences', 'Materials Science, Polymer Chemistry, Lab Analysis, Research Writing', 0);
 
 -- ============================================
 -- Sample Projects

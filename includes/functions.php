@@ -162,6 +162,22 @@ function flashMessage($type = 'success') {
 }
 
 /**
+ * Ensure is_admin column exists in users table
+ * @param mysqli $conn Database connection
+ */
+function ensureUserAdminColumn($conn) {
+    static $adminColumnChecked = false;
+    if ($adminColumnChecked) return;
+    $check = $conn->query("SHOW COLUMNS FROM `users` LIKE 'is_admin'");
+    if ($check && $check->num_rows === 0) {
+        $conn->query("ALTER TABLE `users` ADD COLUMN `is_admin` TINYINT(1) DEFAULT 0 AFTER `profile_image`");
+        // Upgrade existing admins during migration
+        $conn->query("UPDATE `users` SET `is_admin` = 1 WHERE `id` = 1 OR `email` IN ('demo@studenthub.lk', 'admin@studenthub.lk') OR `username` = 'ayesh'");
+    }
+    $adminColumnChecked = true;
+}
+
+/**
  * Ensure profile_image column exists in users table
  * @param mysqli $conn Database connection
  */
@@ -255,7 +271,8 @@ function deleteAvatarFile($filename, $uploadDir = 'uploads/avatars/') {
  */
 function getUserById($conn, $userId) {
     ensureUserAvatarColumn($conn);
-    $stmt = $conn->prepare("SELECT id, username, full_name, email, faculty, skills, profile_image, created_at FROM users WHERE id = ?");
+    ensureUserAdminColumn($conn);
+    $stmt = $conn->prepare("SELECT id, username, full_name, email, faculty, skills, profile_image, is_admin, created_at FROM users WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -461,10 +478,7 @@ function setProjectCoverImage($conn, $projectId, $imageName, $userId) {
  * @return bool True if the current session user is the admin
  */
 function isAdmin() {
-    $userId = $_SESSION['user_id'] ?? null;
-    $username = $_SESSION['username'] ?? '';
-    $email = $_SESSION['email'] ?? '';
-    return ($userId == 1 || $username === 'ayesh' || in_array($email, ['demo@studenthub.lk', 'admin@studenthub.lk']));
+    return (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1);
 }
 
 /**

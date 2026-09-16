@@ -33,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Authenticate user
     if (empty($errors)) {
         ensureUserAvatarColumn($conn);
-        $stmt = $conn->prepare("SELECT id, username, full_name, email, password, faculty, skills, profile_image FROM users WHERE email = ?");
+        ensureUserAdminColumn($conn);
+        $stmt = $conn->prepare("SELECT id, username, full_name, email, password, faculty, skills, profile_image, is_admin FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -47,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['profile_image'] = $user['profile_image'] ?? null;
+            $_SESSION['is_admin'] = $user['is_admin'] ?? 0;
 
             $_SESSION['success'] = 'Welcome back, ' . $user['full_name'] . '!';
             header('Location: dashboard.php');

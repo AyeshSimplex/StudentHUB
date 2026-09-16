@@ -65,7 +65,7 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **Message Moderation:** Privileges to delete any public message or reply submitted by any user across the platform.
 - **Review Moderation:** Ability to remove any project review or rating to maintain community standards, even if they are not the author.
 - **Official Responses:** Replies submitted by an administrator to any user inquiry are represented officially as 'StudentHub Team'.
-- **Admin Assignment:** The admin role is dynamically assigned via `isAdmin()` to user ID `1`, username `ayesh`, or emails `demo@studenthub.lk` / `admin@studenthub.lk`.
+- **Admin Assignment:** The admin role is securely managed via an `is_admin` database column (Role-Based Access Control). Registration with reserved administrative emails or usernames is strictly blocked to prevent privilege escalation.
 
 ---
 

@@ -50,6 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Passwords do not match.';
     }
 
+    // Security: Block reserved admin credentials
+    $restrictedEmails = ['admin@studenthub.lk', 'demo@studenthub.lk'];
+    $restrictedUsernames = ['admin', 'ayesh'];
+
+    if (in_array(strtolower($email), $restrictedEmails)) {
+        $errors[] = 'This email address is restricted and cannot be registered.';
+    }
+    if (in_array(strtolower($username), $restrictedUsernames)) {
+        $errors[] = 'This username is restricted and cannot be registered.';
+    }
+
     // Check if username or email already exists
     if (empty($errors)) {
         ensureUserAvatarColumn($conn);
