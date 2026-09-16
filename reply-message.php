@@ -38,8 +38,8 @@ if (strlen($replyText) < 2) {
     exit();
 }
 
-// Verify the parent message exists
-$stmt = $conn->prepare("SELECT id FROM messages WHERE id = ?");
+// Verify the parent message exists and check authorization
+$stmt = $conn->prepare("SELECT id, user_id FROM messages WHERE id = ?");
 $stmt->bind_param("i", $messageId);
 $stmt->execute();
 $message = $stmt->get_result()->fetch_assoc();
@@ -47,6 +47,15 @@ $stmt->close();
 
 if (!$message) {
     $_SESSION['error'] = 'Message not found.';
+    header('Location: dashboard.php');
+    exit();
+}
+
+$isMessageOwner = (isset($message['user_id']) && $message['user_id'] == $userId);
+$isAuthorized = $isMessageOwner || isAdmin();
+
+if (!$isAuthorized) {
+    $_SESSION['error'] = 'You do not have permission to reply to this message.';
     header('Location: dashboard.php');
     exit();
 }

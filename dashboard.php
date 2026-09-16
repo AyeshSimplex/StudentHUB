@@ -131,7 +131,7 @@ require_once 'includes/header.php';
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="#public-messages" class="text-decoration-none">
+                <a href="#inquiries" class="text-decoration-none">
                     <div class="dashboard-stat-card fade-in delay-4" style="cursor: pointer;">
                         <div class="dashboard-stat-icon" style="background: rgba(0, 188, 212, 0.12); color: var(--accent);">
                             <i class="bi bi-envelope"></i>
@@ -202,10 +202,10 @@ require_once 'includes/header.php';
         </div>
 
         <!-- Contact Messages Card -->
-        <div class="dashboard-table-card fade-in mt-4" id="public-messages">
+        <div class="dashboard-table-card fade-in mt-4" id="inquiries">
             <div class="dashboard-table-header">
                 <div>
-                    <h4><i class="bi bi-envelope-paper me-2 accent-text"></i>Public Messages</h4>
+                    <h4><i class="bi bi-envelope-paper me-2 accent-text"></i>Inquiries</h4>
                     <small class="text-muted">Messages submitted through the Contact page</small>
                 </div>
                 <a href="contact.php" class="btn btn-outline-accent btn-sm d-inline-flex align-items-center justify-content-center">

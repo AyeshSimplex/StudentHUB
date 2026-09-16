@@ -165,8 +165,8 @@ require_once 'includes/header.php';
                             <button type="submit" class="btn btn-accent flex-fill d-flex align-items-center justify-content-center">
                                 <i class="bi bi-send me-2"></i>Send Message
                             </button>
-                            <a href="dashboard.php#public-messages" class="btn btn-outline-primary flex-fill d-flex align-items-center justify-content-center">
-                                <i class="bi bi-chat-square-text me-2"></i>View Public Messages
+                            <a href="dashboard.php#inquiries" class="btn btn-outline-primary flex-fill d-flex align-items-center justify-content-center">
+                                <i class="bi bi-chat-square-text me-2"></i>View Inquiries
                             </a>
                         </div>
                     </form>
