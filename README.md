@@ -60,6 +60,13 @@ StudentHub is a comprehensive, full-stack web application designed for universit
 - **Dashboard Message Management (NEW):** Students and Admins can view, edit, reply, or delete their own messages and replies directly from the dashboard. Admin replies appear as 'StudentHub Team'.
 - **User Dashboard Metrics (NEW):** The inquiries counter accurately reflects only the current user's submitted messages for better privacy.
 
+### 👑 Admin Capabilities (Moderation)
+- **Privacy Access:** While the "Public Messages" section is visible to all logged-in users, only Administrators can see the private email addresses of the users who submitted inquiries.
+- **Message Moderation:** Privileges to delete any public message or reply submitted by any user across the platform.
+- **Review Moderation:** Ability to remove any project review or rating to maintain community standards, even if they are not the author.
+- **Official Responses:** Replies submitted by an administrator to any user inquiry are represented officially as 'StudentHub Team'.
+- **Admin Assignment:** The admin role is dynamically assigned via `isAdmin()` to user ID `1`, username `ayesh`, or emails `demo@studenthub.lk` / `admin@studenthub.lk`.
+
 ---
 
 ## 🛠 Technology Stack

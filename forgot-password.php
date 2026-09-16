@@ -120,7 +120,7 @@ require_once 'includes/header.php';
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                         <input type="email" class="form-control" id="email" name="email"
                                value="<?php echo sanitize($submittedEmail); ?>"
-                               placeholder="e.g. ent2023048@tec.rjt.ac.lk" required>
+                               placeholder="e.g. student@studenthub.lk" required>
                     </div>
                     <div class="form-text">We will send a secure one-time link valid for 1 hour.</div>
                 </div>

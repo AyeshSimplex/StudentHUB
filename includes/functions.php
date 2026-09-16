@@ -464,7 +464,7 @@ function isAdmin() {
     $userId = $_SESSION['user_id'] ?? null;
     $username = $_SESSION['username'] ?? '';
     $email = $_SESSION['email'] ?? '';
-    return ($userId == 1 || $username === 'ayesh' || in_array($email, ['demo@studenthub.lk', 'ent2023048@tec.rjt.ac.lk']));
+    return ($userId == 1 || $username === 'ayesh' || in_array($email, ['demo@studenthub.lk', 'admin@studenthub.lk']));
 }
 
 /**
