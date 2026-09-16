@@ -172,7 +172,7 @@ function ensureUserAdminColumn($conn) {
     if ($check && $check->num_rows === 0) {
         $conn->query("ALTER TABLE `users` ADD COLUMN `is_admin` TINYINT(1) DEFAULT 0 AFTER `profile_image`");
         // Upgrade existing admins during migration
-        $conn->query("UPDATE `users` SET `is_admin` = 1 WHERE `id` = 1 OR `email` IN ('demo@studenthub.lk', 'admin@studenthub.lk') OR `username` = 'ayesh'");
+        $conn->query("UPDATE `users` SET `is_admin` = 1 WHERE `id` = 1 OR `email` = 'demo@studenthub.lk' OR `username` = 'ayesh'");
     }
     $adminColumnChecked = true;
 }

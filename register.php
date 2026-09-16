@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Security: Block reserved admin credentials
-    $restrictedEmails = ['admin@studenthub.lk', 'demo@studenthub.lk'];
+    $restrictedEmails = ['demo@studenthub.lk'];
     $restrictedUsernames = ['admin', 'ayesh'];
 
     if (in_array(strtolower($email), $restrictedEmails)) {
