@@ -36,6 +36,7 @@ if (!$project) {
 initProjectImagesTable($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['project_images'])) {
+    requireCsrfToken("project-details.php?id=$projectId");
     $caption = trim($_POST['caption'] ?? '');
     $uploadResult = uploadMultipleImages($_FILES['project_images']);
 

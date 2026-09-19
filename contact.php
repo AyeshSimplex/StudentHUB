@@ -15,6 +15,7 @@ $old = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('contact.php');
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $subject = trim($_POST['subject'] ?? '');
@@ -40,8 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If no errors, insert into database
     if (empty($errors)) {
         $msgUserId = $_SESSION['user_id'] ?? null;
-        $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message, user_id) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $name, $email, $subject, $message, $msgUserId);
+        if ($msgUserId !== null) {
+            $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message, user_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssi", $name, $email, $subject, $message, $msgUserId);
+        } else {
+            $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $name, $email, $subject, $message);
+        }
 
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Thank you! Your message has been submitted successfully.';
@@ -127,6 +133,7 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <form id="contactForm" method="POST" action="contact.php" novalidate>
+                        <?php echo csrfField(); ?>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="mb-3">

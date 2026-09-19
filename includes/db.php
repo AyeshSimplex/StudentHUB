@@ -29,11 +29,17 @@ $conn->query("SET time_zone = '+05:30'");
 
 // Check connection
 if ($conn->connect_error) {
+    // Log the real error for debugging (never expose to users)
+    $logDir = __DIR__ . '/../logs';
+    if (!is_dir($logDir)) {
+        @mkdir($logDir, 0755, true);
+    }
+    @file_put_contents($logDir . '/db_errors.log', '[' . date('Y-m-d H:i:s') . '] Connection failed: ' . $conn->connect_error . "\n", FILE_APPEND);
+
     die('<div style="text-align:center;padding:50px;font-family:sans-serif;">
         <h2>Database Connection Failed</h2>
         <p>Could not connect to the StudentHub database.</p>
         <p>Please check your database credentials in <code>includes/db.php</code></p>
-        <p>Error: ' . $conn->connect_error . '</p>
     </div>');
 }
 

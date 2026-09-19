@@ -2,6 +2,7 @@
 /**
  * Delete Reply — StudentHub
  * Allows a user to delete their own reply, or admin to delete any reply.
+ * Requires POST method with CSRF token.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -9,12 +10,22 @@ require_once 'includes/functions.php';
 // Require authentication
 requireLogin();
 
+// Only allow POST requests for destructive actions
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = 'Invalid request method.';
+    header('Location: dashboard.php');
+    exit();
+}
+
+// Validate CSRF token
+requireCsrfToken('dashboard.php');
+
 $userId = $_SESSION['user_id'];
 
 // Ensure replies table exists
 ensureMessageRepliesTable($conn);
 
-$replyId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$replyId = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
 if ($replyId <= 0) {
     $_SESSION['error'] = 'Invalid reply ID.';
@@ -36,7 +47,7 @@ if (!$reply) {
 }
 
 // Authorization: reply owner OR admin
-$isReplyOwner = ($reply['user_id'] == $userId);
+$isReplyOwner = ((int)$reply['user_id'] === (int)$userId);
 $isAuthorized = $isReplyOwner || isAdmin();
 
 if (!$isAuthorized) {

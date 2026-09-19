@@ -37,6 +37,7 @@ if (empty($token)) {
 
 // Process new password submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isValidToken) {
+    requireCsrfToken('reset-password.php?token=' . urlencode($token));
     $newPassword = $_POST['new_password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
 
@@ -114,6 +115,7 @@ require_once 'includes/header.php';
 
             <?php if ($isValidToken): ?>
                 <form method="POST" action="reset-password.php" novalidate id="resetPasswordForm">
+                    <?php echo csrfField(); ?>
                     <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
 
                     <div class="mb-3">

@@ -18,6 +18,7 @@ $oldEmail = '';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('login.php');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $oldEmail = $email;
@@ -42,7 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         if ($user && password_verify($password, $user['password'])) {
-            // Login successful — start session
+            // Login successful — regenerate session ID to prevent fixation
+            session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['full_name'] = $user['full_name'];
@@ -85,6 +87,7 @@ require_once 'includes/header.php';
             <?php endif; ?>
 
             <form id="loginForm" method="POST" action="login.php" novalidate>
+                <?php echo csrfField(); ?>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
                     <input type="email" class="form-control" id="email" name="email"

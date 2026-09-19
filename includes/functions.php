@@ -6,9 +6,57 @@
  * across the application.
  */
 
-// Start session if not already started
+// Start session with hardened security settings
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    session_start([
+        'cookie_httponly' => true,
+        'cookie_samesite' => 'Strict',
+        'use_strict_mode' => true,
+    ]);
+}
+
+/**
+ * Generate or retrieve a CSRF token for the current session
+ * @return string The CSRF token
+ */
+function generateCsrfToken() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * Validate a submitted CSRF token against the session token
+ * @param string $token The token submitted with the form
+ * @return bool True if valid
+ */
+function validateCsrfToken($token) {
+    if (empty($_SESSION['csrf_token']) || empty($token)) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+/**
+ * Output a hidden CSRF input field for use in forms
+ * @return string HTML hidden input element
+ */
+function csrfField() {
+    return '<input type="hidden" name="csrf_token" value="' . generateCsrfToken() . '">';
+}
+
+/**
+ * Validate CSRF token from POST request; redirect with error on failure
+ * @param string $redirectUrl URL to redirect to on failure
+ */
+function requireCsrfToken($redirectUrl = 'index.php') {
+    $token = $_POST['csrf_token'] ?? '';
+    if (!validateCsrfToken($token)) {
+        $_SESSION['error'] = 'Invalid or expired security token. Please try again.';
+        header('Location: ' . $redirectUrl);
+        exit();
+    }
 }
 
 /**
@@ -439,7 +487,7 @@ function deleteProjectGalleryImage($conn, $imageId, $userId) {
     $delStmt->close();
 
     // If this image was also the cover image in projects table, clear or update it
-    if ($img['cover_id'] ?? false || $img['image'] === $img['cover_image']) {
+    if ($img['image'] === $img['cover_image']) {
         // Fallback to another image or null
         $nextStmt = $conn->prepare("SELECT image FROM project_images WHERE project_id = ? LIMIT 1");
         $nextStmt->bind_param("i", $img['project_id']);
@@ -478,7 +526,7 @@ function setProjectCoverImage($conn, $projectId, $imageName, $userId) {
  * @return bool True if the current session user is the admin
  */
 function isAdmin() {
-    return (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1);
+    return (isset($_SESSION['is_admin']) && (int)$_SESSION['is_admin'] === 1);
 }
 
 /**

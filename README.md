@@ -266,16 +266,19 @@ StudentHUB/
 ## 🛡 Security & Validation Implementations
 
 1. **Prepared SQL Statements:** All database queries utilize parameterized `mysqli::prepare` statements to prevent SQL Injection attacks.
-2. **XSS Protection:** All dynamic user output rendered in HTML is sanitized using `htmlspecialchars()` with `ENT_QUOTES` and UTF-8 encoding.
+2. **XSS Protection:** All dynamic user output rendered in HTML is sanitized using `htmlspecialchars()` with `ENT_QUOTES` and UTF-8 encoding. JavaScript contexts are safely encoded using `json_encode()`.
 3. **Password Security:** Passwords are never stored in plain text; encrypted using PHP `password_hash()` with the `PASSWORD_BCRYPT` algorithm.
 4. **Session Authentication Guards:** Protected routes (`dashboard.php`, `settings.php`, `add-project.php`, `edit-project.php`) enforce strict login verification through `requireLogin()`.
-5. **Authorization Verification:** Project editing and deletion verify that `$_SESSION['user_id'] === $project['user_id']` so students can only modify their own submissions.
-6. **Upload Security:**
+5. **Session Hardening:** Sessions are secured with `cookie_httponly`, `cookie_samesite=Strict`, and `use_strict_mode`. Session IDs are regenerated upon successful login to prevent fixation attacks.
+6. **CSRF Protection:** All state-changing operations and forms are protected by cryptographically secure, per-session CSRF tokens (`generateCsrfToken()` and `validateCsrfToken()`).
+7. **Destructive Action Safety:** All deletions (projects, messages, replies, reviews, account) strictly require `POST` methods combined with CSRF tokens, completely mitigating accidental or malicious execution via `GET` requests or embedded links.
+8. **Authorization Verification:** Resource modification and deletion verify that ownership (`user_id`) strictly matches the current user session using strict type comparisons `(int)`.
+9. **Upload Security:**
    - File extensions validated against strict MIME and type whitelists (`jpg`, `jpeg`, `png`, `webp`).
    - File sizes capped (5MB maximum).
    - Random unique filenames generated via `bin2hex(random_bytes(16))` to prevent file overwrites and path traversal.
    - An `.htaccess` file inside `uploads/` prevents server execution of any uploaded script.
-7. **CSRF & Confirmation Protections:** Account deletion enforces password re-authentication, confirmation typing (`DELETE`), and explicit user consent.
+10. **Error & Header Safety:** Database connection errors are hidden from users and logged securely. Email headers are sanitized to prevent header injection. External links use `rel="noopener noreferrer"`.
 
 ---
 

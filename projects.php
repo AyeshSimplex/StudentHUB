@@ -170,7 +170,7 @@ $stmt->close();
     document.addEventListener('DOMContentLoaded', function() {
         var categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
-            categoryFilter.value = '<?php echo addslashes($selectedCategory); ?>';
+            categoryFilter.value = <?php echo json_encode($selectedCategory); ?>;
             categoryFilter.dispatchEvent(new Event('change'));
         }
     });

@@ -15,6 +15,11 @@ $projectId = isset($_REQUEST['project_id']) ? intval($_REQUEST['project_id']) : 
 $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
           || (isset($_REQUEST['format']) && $_REQUEST['format'] === 'json');
 
+// Validate CSRF token for non-AJAX requests
+if (!$isAjax && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('dashboard.php');
+}
+
 if ($imageId <= 0) {
     if ($isAjax) {
         header('Content-Type: application/json');

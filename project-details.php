@@ -124,7 +124,7 @@ require_once 'includes/header.php';
                         <i class="bi bi-images me-1"></i>+ Add Images
                     </button>
                     <a href="delete-project.php?id=<?php echo $projectId; ?>" class="btn btn-outline-danger"
-                       onclick="return confirm('Are you sure you want to delete this project? This cannot be undone.');">
+                       onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this project? This cannot be undone.')) { var f=document.createElement('form'); f.method='POST'; f.action='delete-project.php'; var i=document.createElement('input'); i.type='hidden'; i.name='id'; i.value='<?php echo $projectId; ?>'; f.appendChild(i); var t=document.createElement('input'); t.type='hidden'; t.name='csrf_token'; t.value='<?php echo generateCsrfToken(); ?>'; f.appendChild(t); document.body.appendChild(f); f.submit(); }">
                         <i class="bi bi-trash"></i>
                     </a>
                 </div>
@@ -334,12 +334,12 @@ require_once 'includes/header.php';
                     <!-- Links -->
                     <div class="d-flex flex-column flex-md-row gap-2 mb-4">
                         <?php if ($project['project_url']): ?>
-                            <a href="<?php echo sanitize($project['project_url']); ?>" target="_blank" class="btn btn-accent text-nowrap">
+                            <a href="<?php echo sanitize($project['project_url']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-accent text-nowrap">
                                 <i class="bi bi-globe me-2"></i>View Live Demo
                             </a>
                         <?php endif; ?>
                         <?php if ($project['github_url']): ?>
-                            <a href="<?php echo sanitize($project['github_url']); ?>" target="_blank" class="btn btn-outline-accent text-nowrap">
+                            <a href="<?php echo sanitize($project['github_url']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-accent text-nowrap">
                                 <i class="bi bi-github me-2"></i>View on GitHub
                             </a>
                         <?php endif; ?>
@@ -407,6 +407,7 @@ require_once 'includes/header.php';
                             <div class="review-form-card mb-4">
                                 <h6 class="mb-3"><i class="bi bi-pencil-square me-1"></i><?php echo $userReview ? 'Update Your Review' : 'Write a Review'; ?></h6>
                                 <form method="POST" action="submit-review.php">
+                                    <?php echo csrfField(); ?>
                                     <input type="hidden" name="project_id" value="<?php echo $projectId; ?>">
 
                                     <!-- Star Rating Selection -->
@@ -467,11 +468,14 @@ require_once 'includes/header.php';
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="text-muted small"><?php echo getTimeAgo($rev['created_at']); ?></span>
                                                 <?php if ($currentUserId && ($rev['user_id'] == $currentUserId || isAdmin())): ?>
-                                                    <a href="delete-review.php?id=<?php echo $rev['id']; ?>&project_id=<?php echo $projectId; ?>"
-                                                       class="btn btn-sm btn-outline-danger" style="padding: 2px 6px; font-size: 0.7rem;"
-                                                       onclick="return confirm('Delete this review?');">
-                                                        <i class="bi bi-trash"></i>
-                                                    </a>
+                                                    <form method="POST" action="delete-review.php" class="d-inline" onsubmit="return confirm('Delete this review?');">
+                                                        <?php echo csrfField(); ?>
+                                                        <input type="hidden" name="id" value="<?php echo $rev['id']; ?>">
+                                                        <input type="hidden" name="project_id" value="<?php echo $projectId; ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" style="padding: 2px 6px; font-size: 0.7rem;">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -517,6 +521,7 @@ require_once 'includes/header.php';
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radius);">
             <form method="POST" action="upload-project-images.php" enctype="multipart/form-data">
+                <?php echo csrfField(); ?>
                 <input type="hidden" name="project_id" value="<?php echo $projectId; ?>">
                 <input type="hidden" name="redirect" value="details">
 

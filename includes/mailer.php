@@ -96,8 +96,9 @@ function sendViaSmtpSocket($to, $subject, $htmlMessage, $fromName, $fromEmail) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: StudentHub <$username>\r\n";
     $headers .= "To: <$to>\r\n";
-    $headers .= "Reply-To: " . addslashes($fromName) . " <$fromEmail>\r\n";
-    $headers .= "Subject: $subject\r\n";
+    $headers .= "Reply-To: " . str_replace(["\r", "\n", '"'], '', $fromName) . " <$fromEmail>\r\n";
+    $safeSubject = str_replace(["\r", "\n"], '', $subject);
+    $headers .= "Subject: $safeSubject\r\n";
     $headers .= "Date: " . date('r') . "\r\n";
 
     fputs($socket, $headers . "\r\n" . $htmlMessage . "\r\n.\r\n");

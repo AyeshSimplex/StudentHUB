@@ -184,9 +184,13 @@ require_once 'includes/header.php';
                                         <a href="edit-project.php?id=<?php echo $project['id']; ?>" class="btn btn-outline-primary action-btn me-1" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="delete-project.php?id=<?php echo $project['id']; ?>" class="btn btn-outline-danger action-btn delete-btn" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <form method="POST" action="delete-project.php" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this project? This cannot be undone.');">
+                                            <?php echo csrfField(); ?>
+                                            <input type="hidden" name="id" value="<?php echo $project['id']; ?>">
+                                            <button type="submit" class="btn btn-outline-danger action-btn" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -260,11 +264,13 @@ require_once 'includes/header.php';
 
                                 <!-- Delete button - own messages OR admin -->
                                 <?php if ((isset($msg['user_id']) && $msg['user_id'] == $userId) || $adminCheck): ?>
-                                    <a href="delete-message.php?id=<?php echo $msg['id']; ?>"
-                                       class="btn btn-sm btn-outline-danger delete-msg-btn d-inline-flex align-items-center justify-content-center"
-                                       onclick="return confirm('Are you sure you want to delete this message?');">
-                                        <i class="bi bi-trash m-0"></i>
-                                    </a>
+                                    <form method="POST" action="delete-message.php" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                                        <?php echo csrfField(); ?>
+                                        <input type="hidden" name="id" value="<?php echo $msg['id']; ?>">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-msg-btn d-inline-flex align-items-center justify-content-center">
+                                            <i class="bi bi-trash m-0"></i>
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
 
@@ -272,6 +278,7 @@ require_once 'includes/header.php';
                             <?php if (isset($msg['user_id']) && $msg['user_id'] == $userId): ?>
                                 <div class="edit-message-form" id="editForm-<?php echo $msg['id']; ?>" style="display: none;">
                                     <form method="POST" action="edit-message.php">
+                                        <?php echo csrfField(); ?>
                                         <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                         <div class="mb-2">
                                             <input type="text" name="subject" class="form-control form-control-sm"
@@ -296,6 +303,7 @@ require_once 'includes/header.php';
                             <?php if (isLoggedIn()): ?>
                                 <div class="reply-form-container" id="replyForm-<?php echo $msg['id']; ?>" style="display: none;">
                                     <form method="POST" action="reply-message.php">
+                                        <?php echo csrfField(); ?>
                                         <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
                                         <div class="d-flex gap-2 align-items-start">
                                             <textarea name="reply_text" class="form-control form-control-sm" rows="2"
@@ -335,14 +343,14 @@ require_once 'includes/header.php';
                                                 </strong>
                                                 <div class="d-flex align-items-center gap-2 ms-auto">
                                                     <span class="text-muted small"><?php echo getTimeAgo($reply['created_at']); ?></span>
-                                                    <?php if ($_SESSION['user_id'] == $reply['user_id'] || isAdmin()): ?>
-                                                        <a href="delete-reply.php?id=<?php echo $reply['id']; ?>"
-                                                           class="btn btn-sm btn-outline-danger border-0"
-                                                           style="padding: 2px 6px; font-size: 0.75rem;"
-                                                           onclick="return confirm('Delete this reply?');"
-                                                           title="Delete Reply">
-                                                            <i class="bi bi-trash"></i>
-                                                        </a>
+                                                    <?php if ((int)$_SESSION['user_id'] === (int)$reply['user_id'] || isAdmin()): ?>
+                                                        <form method="POST" action="delete-reply.php" class="d-inline" onsubmit="return confirm('Delete this reply?');">
+                                                            <?php echo csrfField(); ?>
+                                                            <input type="hidden" name="id" value="<?php echo $reply['id']; ?>">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger border-0" style="padding: 2px 6px; font-size: 0.75rem;" title="Delete Reply">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>

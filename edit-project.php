@@ -39,7 +39,7 @@ if (!$project) {
 }
 
 // Authorization check — user can only edit their own projects
-if ($project['user_id'] != $userId) {
+if ((int)$project['user_id'] !== (int)$userId) {
     $_SESSION['error'] = 'You are not authorized to edit this project.';
     header('Location: dashboard.php');
     exit();
@@ -58,6 +58,7 @@ $old = [
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken("edit-project.php?id=$projectId");
     $title = trim($_POST['title'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $category = trim($_POST['category'] ?? '');
@@ -233,7 +234,8 @@ require_once 'includes/header.php';
                             </h4>
                             <p class="text-muted small mb-4">Edit project details, primary cover image, and skills demonstrated.</p>
 
-                            <form id="projectForm" method="POST" action="edit-project.php?id=<?php echo $projectId; ?>" enctype="multipart/form-data" novalidate>
+                            <form id="editProjectForm" method="POST" action="edit-project.php?id=<?php echo $projectId; ?>" enctype="multipart/form-data" novalidate>
+                                <?php echo csrfField(); ?>
 
                                 <div class="mb-3">
                                     <label for="project_title" class="form-label">Project Title <span class="text-danger">*</span></label>

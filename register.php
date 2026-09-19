@@ -18,6 +18,7 @@ $old = ['username' => '', 'full_name' => '', 'email' => '', 'faculty' => '', 'sk
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('register.php');
     $username = trim($_POST['username'] ?? '');
     $fullName = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -133,6 +134,7 @@ require_once 'includes/header.php';
             <?php endif; ?>
 
             <form id="registerForm" method="POST" action="register.php" enctype="multipart/form-data" novalidate>
+                <?php echo csrfField(); ?>
                 <!-- Profile Photo (Optional) -->
                 <div class="text-center mb-4">
                     <div class="avatar-upload-wrapper position-relative d-inline-block">

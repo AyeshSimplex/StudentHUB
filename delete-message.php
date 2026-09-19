@@ -4,6 +4,7 @@
  * Deletes a contact form message from the database.
  * Protected page — requires authentication.
  * Allows: message owner (user_id match) or admin.
+ * Requires POST method with CSRF token.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -11,12 +12,22 @@ require_once 'includes/functions.php';
 // Require authentication
 requireLogin();
 
+// Only allow POST requests for destructive actions
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = 'Invalid request method.';
+    header('Location: dashboard.php');
+    exit();
+}
+
+// Validate CSRF token
+requireCsrfToken('dashboard.php');
+
 $userId = $_SESSION['user_id'];
 
 // Ensure user_id column exists
 ensureMessagesUserIdColumn($conn);
 
-$messageId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$messageId = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
 if ($messageId <= 0) {
     $_SESSION['error'] = 'Invalid message ID.';
@@ -38,7 +49,7 @@ if (!$message) {
 }
 
 // Authorization: message owner OR admin
-$isMessageOwner = (isset($message['user_id']) && $message['user_id'] == $userId);
+$isMessageOwner = (isset($message['user_id']) && (int)$message['user_id'] === (int)$userId);
 $isAuthorized = $isMessageOwner || isAdmin();
 
 if (!$isAuthorized) {

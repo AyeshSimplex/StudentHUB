@@ -2,6 +2,7 @@
 /**
  * Delete Review — StudentHub
  * Allows a user to delete their own review, or admin to delete any review.
+ * Requires POST method with CSRF token.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -9,13 +10,23 @@ require_once 'includes/functions.php';
 // Require authentication
 requireLogin();
 
+// Only allow POST requests for destructive actions
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = 'Invalid request method.';
+    header('Location: projects.php');
+    exit();
+}
+
+// Validate CSRF token
+requireCsrfToken('projects.php');
+
 $userId = $_SESSION['user_id'];
 
 // Ensure reviews table exists
 ensureReviewsTable($conn);
 
-$reviewId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$projectId = isset($_GET['project_id']) ? intval($_GET['project_id']) : 0;
+$reviewId = isset($_POST['id']) ? intval($_POST['id']) : 0;
+$projectId = isset($_POST['project_id']) ? intval($_POST['project_id']) : 0;
 
 if ($reviewId <= 0) {
     $_SESSION['error'] = 'Invalid review ID.';
@@ -39,7 +50,7 @@ if (!$review) {
 $redirectId = $review['project_id'];
 
 // Authorization: review owner OR admin
-$isReviewOwner = ($review['user_id'] == $userId);
+$isReviewOwner = ((int)$review['user_id'] === (int)$userId);
 $isAuthorized = $isReviewOwner || isAdmin();
 
 if (!$isAuthorized) {

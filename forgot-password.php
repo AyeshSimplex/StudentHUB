@@ -20,6 +20,7 @@ $previewResetLink = '';
 $submittedEmail = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('forgot-password.php');
     $email = trim($_POST['email'] ?? '');
     $submittedEmail = $email;
 
@@ -114,6 +115,7 @@ require_once 'includes/header.php';
             <?php endif; ?>
 
             <form method="POST" action="forgot-password.php" novalidate>
+                <?php echo csrfField(); ?>
                 <div class="mb-4">
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
                     <div class="input-group">

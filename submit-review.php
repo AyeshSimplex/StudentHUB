@@ -20,6 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+// Validate CSRF token
+requireCsrfToken('projects.php');
+
 $projectId = isset($_POST['project_id']) ? intval($_POST['project_id']) : 0;
 $rating = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
 $reviewText = trim($_POST['review_text'] ?? '');

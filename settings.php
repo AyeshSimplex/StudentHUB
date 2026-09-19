@@ -36,6 +36,7 @@ $activeTab = 'avatar'; // Default to avatar/profile tab if not specified
 
 // Handle Form Submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('settings.php');
     $action = isset($_POST['action']) ? trim($_POST['action']) : '';
 
     // ===================================
@@ -465,6 +466,7 @@ require_once 'includes/header.php';
                                         </p>
                                         <?php if (!empty($currentUser['profile_image']) && file_exists('uploads/avatars/' . $currentUser['profile_image'])): ?>
                                             <form action="settings.php" method="POST" onsubmit="return confirm('Are you sure you want to remove your profile photo?');" class="d-inline">
+                                                <?php echo csrfField(); ?>
                                                 <input type="hidden" name="action" value="delete_avatar">
                                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                                     <i class="bi bi-trash3 me-1"></i>Remove Current Photo
@@ -477,6 +479,7 @@ require_once 'includes/header.php';
 
                             <!-- Upload Form -->
                             <form action="settings.php" method="POST" enctype="multipart/form-data" id="changeAvatarForm">
+                                <?php echo csrfField(); ?>
                                 <input type="hidden" name="action" value="update_avatar">
 
                                 <div class="mb-4">
@@ -538,6 +541,7 @@ require_once 'includes/header.php';
                             <?php endif; ?>
 
                             <form action="settings.php" method="POST" novalidate id="changeEmailForm">
+                                <?php echo csrfField(); ?>
                                 <input type="hidden" name="action" value="change_email">
 
                                 <div class="mb-3">
@@ -617,6 +621,7 @@ require_once 'includes/header.php';
                             <?php endif; ?>
 
                             <form action="settings.php" method="POST" novalidate id="changePasswordForm">
+                                <?php echo csrfField(); ?>
                                 <input type="hidden" name="action" value="change_password">
 
                                 <div class="mb-3">
@@ -693,6 +698,7 @@ require_once 'includes/header.php';
                             <?php endif; ?>
 
                             <form action="settings.php" method="POST" novalidate id="editProfileForm">
+                                <?php echo csrfField(); ?>
                                 <input type="hidden" name="action" value="update_profile">
 
                                 <!-- Quick Avatar Banner -->
@@ -815,6 +821,7 @@ require_once 'includes/header.php';
                             </div>
 
                             <form action="settings.php" method="POST" id="deleteAccountForm" novalidate>
+                                <?php echo csrfField(); ?>
                                 <input type="hidden" name="action" value="delete_account">
 
                                 <div class="mb-3">

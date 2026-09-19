@@ -3,6 +3,7 @@
  * Delete Project — StudentHub
  * Deletes a project ONLY if it belongs to the logged-in user.
  * Protected page — requires authentication + authorization.
+ * Requires POST method with CSRF token.
  */
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -10,8 +11,18 @@ require_once 'includes/functions.php';
 // Require authentication
 requireLogin();
 
+// Only allow POST requests for destructive actions
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = 'Invalid request method.';
+    header('Location: dashboard.php');
+    exit();
+}
+
+// Validate CSRF token
+requireCsrfToken('dashboard.php');
+
 $userId = $_SESSION['user_id'];
-$projectId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$projectId = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
 if ($projectId <= 0) {
     $_SESSION['error'] = 'Invalid project ID.';
@@ -33,7 +44,7 @@ if (!$project) {
 }
 
 // Authorization check — user can only delete their own projects
-if ($project['user_id'] != $userId) {
+if ((int)$project['user_id'] !== (int)$userId) {
     $_SESSION['error'] = 'You are not authorized to delete this project.';
     header('Location: dashboard.php');
     exit();

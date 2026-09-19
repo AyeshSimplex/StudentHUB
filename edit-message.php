@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+// Validate CSRF token
+requireCsrfToken('dashboard.php');
+
 $messageId = isset($_POST['message_id']) ? intval($_POST['message_id']) : 0;
 $newSubject = trim($_POST['subject'] ?? '');
 $newMessage = trim($_POST['message'] ?? '');

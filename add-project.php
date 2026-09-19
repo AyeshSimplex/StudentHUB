@@ -19,6 +19,7 @@ $old = [
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrfToken('add-project.php');
     $title = trim($_POST['title'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $category = trim($_POST['category'] ?? '');
@@ -139,6 +140,7 @@ require_once 'includes/header.php';
                     <?php endif; ?>
 
                     <form id="projectForm" method="POST" action="add-project.php" enctype="multipart/form-data" novalidate>
+                        <?php echo csrfField(); ?>
                         <div class="mb-3">
                             <label for="project_title" class="form-label">Project Title <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="project_title" name="title"
